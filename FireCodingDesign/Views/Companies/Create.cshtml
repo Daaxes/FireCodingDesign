@@ -1,0 +1,59 @@
+﻿@model FireCodingDesign.Models.ShareDataModel
+@* @model FireCodingDesign.Models.Company *@
+
+@* @{
+    ViewData["Title"] = "Create";
+}
+ *@
+<h1>Create</h1>
+
+<h4>Company</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CompanyList.FirstOrDefault().CompanyName" class="control-label"></label>
+                <input asp-for="CompanyList.FirstOrDefault().CompanyName" value="" class="form-control" />
+                <span asp-validation-for="CompanyList.FirstOrDefault().CompanyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyList.FirstOrDefault().Description" class="control-label"></label>
+                <input asp-for="CompanyList.FirstOrDefault().Description" value="" class="form-control" />
+                <span asp-validation-for="CompanyList.FirstOrDefault().Description" class="text-danger">""</span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyList.FirstOrDefault().PhoneNumber" class="control-label"></label>
+                <input asp-for="CompanyList.FirstOrDefault().PhoneNumber" value="" class="form-control" />
+                <span asp-validation-for="CompanyList.FirstOrDefault().PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyList.FirstOrDefault().Email" class="control-label"></label>
+                <input asp-for="CompanyList.FirstOrDefault().Email" value="" class="form-control" />
+                <span asp-validation-for="CompanyList.FirstOrDefault().Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyList.FirstOrDefault().Adress" class="control-label"></label>
+                <input asp-for="CompanyList.FirstOrDefault().Adress" value="" class="form-control" />
+                <span asp-validation-for="CompanyList.FirstOrDefault().Adress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyList.FirstOrDefault().OrganizationNumber" class="control-label"></label>
+                <input asp-for="CompanyList.FirstOrDefault().OrganizationNumber" value="" class="form-control" />
+                <span asp-validation-for="CompanyList.FirstOrDefault().OrganizationNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
