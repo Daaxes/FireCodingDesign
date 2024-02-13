@@ -10,7 +10,7 @@ namespace FireCodingDesign.Models
         public List<Order>? OrderList { get; set; }
         public List<IdentityRole>? IdentityRolesList { get; set; }
         public List<IdentityUser>? IdentityUsersList { get; set; }
-//        public List<UserWithRoleModel>? IdentityUserAndRoleList { get; set; }
+        public List<AdministrationModel>? IdentityUserAndRoleList { get; set; }
         public void clear()
         {
             CustomerList = null;//.Clear();

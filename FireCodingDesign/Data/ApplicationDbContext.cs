@@ -5,19 +5,25 @@ using Microsoft.AspNetCore.Identity;
 
 namespace FireCodingDesign.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext <IdentityUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
+
+        public ApplicationDbContext()
+        {
+        }
+
         public DbSet<FireCodingDesign.Models.Company> Company { get; set; } = default!;
         public DbSet<FireCodingDesign.Models.Provider> Provider { get; set; } = default!;
         public DbSet<FireCodingDesign.Models.Customer> Customer { get; set; } = default!;
         public DbSet<FireCodingDesign.Models.Order> Order { get; set; } = default!;
         public DbSet<FireCodingDesign.Models.Department> Department { get; set; } = default!;
+		public DbSet<FireCodingDesign.Models.AdministrationModel> AdministrationModel { get; set; } = default!;
 
-        protected override void OnModelCreating(ModelBuilder builder)
+		protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             
@@ -139,7 +145,5 @@ namespace FireCodingDesign.Data
         {
             throw new NotImplementedException();
         }
-
-        public DbSet<FireCodingDesign.Models.AdministrationModel> AdministrationModel { get; set; } = default!;
     }
 }

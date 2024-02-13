@@ -79,6 +79,7 @@ namespace FireCodingDesign.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Adding Company class from choosen customer.CompanyId to customer
                 Company company = await _context.Company.FindAsync(customer.CompanyId);
                 customer.Company = company;
 
@@ -90,7 +91,8 @@ namespace FireCodingDesign.Controllers
             return View(customer);
         }
 
-        // GET: Customers/Edit/5
+// Edit() 1
+// GET: Customers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -103,7 +105,8 @@ namespace FireCodingDesign.Controllers
             {
                 return NotFound();
             }
-            ViewData["CompanyId"] = new SelectList(_context.Company, "CompanyID", "CompanyID", customer.CompanyId);
+
+            ViewData["CompanyId"] = new SelectList(_context.Company, "CompanyId", "CompanyName", customer.CompanyId);
             return View(customer);
         }
 
@@ -123,6 +126,9 @@ namespace FireCodingDesign.Controllers
             {
                 try
                 {
+                    Company company = await _context.Company.FindAsync(customer.CompanyId);
+                    customer.Company = company;
+
                     _context.Update(customer);
                     await _context.SaveChangesAsync();
                 }

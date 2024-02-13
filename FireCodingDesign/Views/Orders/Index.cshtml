@@ -3,8 +3,8 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-<h1>Index</h1>
+@* Order Index*@
+<h1>Order Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -36,7 +36,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
-            <td>
+            <td><a href="d:\programming course\c#\slutproject\firecodingdesign\firecodingdesign\views\orders\edit.cshtml">d:\programming course\c#\slutproject\firecodingdesign\firecodingdesign\views\orders\edit.cshtml</a>
                 @Html.DisplayFor(modelItem => item.OrderDate)
             </td>
             <td>
@@ -46,7 +46,7 @@
                 @Html.DisplayFor(modelItem => item.OrderStatus)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Customer.CustomerId)
+                @Html.DisplayFor(modelItem => item.Customer.CustomerName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.OrderNumber">Edit</a> |

@@ -1,10 +1,11 @@
-﻿@model FireCodingDesign.Models.Customer
+﻿@* @model FireCodingDesign.Models.ShareDataModel *@
+@model FireCodingDesign.Models.Customer
 
-@{
+@* @{
     ViewData["Title"] = "Edit";
 }
-
-<h1>Edit</h1>
+ *@
+<h1>Customer Edit</h1>
 
 <h4>Customer</h4>
 <hr />
@@ -34,7 +35,7 @@
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CompanyId" class="control-label"></label>
+                <label asp-for="CompanyId" class="control-label">Company</label>
                 <select asp-for="CompanyId" class="form-control" asp-items="ViewBag.CompanyId"></select>
                 <span asp-validation-for="CompanyId" class="text-danger"></span>
             </div>

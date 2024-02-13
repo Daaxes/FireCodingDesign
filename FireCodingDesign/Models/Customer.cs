@@ -6,7 +6,9 @@ namespace FireCodingDesign.Models
     {
         [Key]
         public int CustomerId { get; set; }
+        [Display(Name = "Customers Name")]
         public string? CustomerName { get; set; }
+        [Display(Name = "Customers Company")]
         public string? CustomerCompany { get; set; }
         public string? Email { get; set; }
         public string? Phone { get; set; }

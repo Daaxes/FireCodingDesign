@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FireCodingDesign.Data;
 using FireCodingDesign.Models;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 
 namespace FireCodingDesign.Controllers
 {
@@ -19,14 +20,16 @@ namespace FireCodingDesign.Controllers
             _context = context;
         }
 
-        // GET: Orders
+// Index()
+// GET: Orders
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Order.Include(o => o.Customer);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Orders/Details/5
+// Details()
+// GET: Orders/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
