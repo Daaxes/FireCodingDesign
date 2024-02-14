@@ -4,6 +4,7 @@ using FireCodingDesign.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,13 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FireCodingDesign.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240214210348_addingTables")]
+    partial class addingTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasAnnotation("ProductVersion", "8.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -305,37 +308,37 @@ namespace FireCodingDesign.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "834b532b-91c4-45b0-96ec-5dd307b4c690",
+                            Id = "1ae8431a-639a-43f4-aba4-70c4e7d69ca2",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
-                            Id = "453ad47c-6c64-47b4-b904-70d435964cb9",
+                            Id = "787d4ed2-aedb-4e4b-8412-6542faeca1ab",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "bc4afa7a-a76b-4ab9-80e3-e89cd09b536f",
+                            Id = "a9c44a95-9453-4b43-bdd2-a4eb595e3811",
                             Name = "PowerUser",
                             NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "4af80b46-1eec-4824-a84b-2c2a5236c7fe",
+                            Id = "29f85c24-1e9d-4d9d-9a7c-f6c20e2a782a",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "eca30d45-1c44-46d9-8020-e7e9e97afd33",
+                            Id = "e29b9d9d-a0dc-4ea8-9c20-c1f5b4973ffb",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "46ef890e-a856-4a80-8a01-ec4c3176222c",
+                            Id = "c0a6ed19-4c2a-4b81-aeba-4647aa3a20dd",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });

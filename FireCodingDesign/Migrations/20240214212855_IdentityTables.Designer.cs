@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FireCodingDesign.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240213212004_creatingTables")]
-    partial class creatingTables
+    [Migration("20240214212855_IdentityTables")]
+    partial class IdentityTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.1")
+                .HasAnnotation("ProductVersion", "8.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -33,7 +33,7 @@ namespace FireCodingDesign.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Active")
+                    b.Property<bool?>("Active")
                         .HasColumnType("bit");
 
                     b.Property<int?>("DepartmentId")
@@ -57,9 +57,6 @@ namespace FireCodingDesign.Migrations
                     b.Property<int?>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<string>("RolesId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
@@ -69,8 +66,6 @@ namespace FireCodingDesign.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DepartmentId");
-
-                    b.HasIndex("RolesId");
 
                     b.ToTable("AdministrationModel");
                 });
@@ -284,6 +279,9 @@ namespace FireCodingDesign.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int?>("AdministrationModelId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -298,6 +296,8 @@ namespace FireCodingDesign.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AdministrationModelId");
+
                     b.HasIndex("NormalizedName")
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex")
@@ -308,37 +308,37 @@ namespace FireCodingDesign.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "cec1061b-fe3c-4ce2-84b4-bd0bb946462c",
+                            Id = "dadbb72b-f0fd-4450-b138-26acad92499b",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
-                            Id = "a6f852df-5f59-4b7a-b154-168fe4debbef",
+                            Id = "c4cc5a46-1faa-46f5-aafe-5b65fa7ab79d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "298980f5-5bfb-4021-84a2-5812ebdd7ded",
+                            Id = "1fe1c6d2-cd81-4b00-a030-152e03728087",
                             Name = "PowerUser",
                             NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "5a6a1d47-1d82-44a9-9b32-8e2886bfe02b",
+                            Id = "d3175c9e-212b-457c-93d2-7f28fb3bdc6b",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "012b402e-70e9-4837-830f-ca402862351c",
+                            Id = "56b11bc8-97c2-4267-b335-974caa093771",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "4a3203b3-9a5a-4b0d-8d7e-5ddf1c95f14c",
+                            Id = "25221c80-4b03-4310-9f0f-15b7c75ea7bd",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -556,13 +556,7 @@ namespace FireCodingDesign.Migrations
                         .WithMany("Administration")
                         .HasForeignKey("DepartmentId");
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", "Roles")
-                        .WithMany()
-                        .HasForeignKey("RolesId");
-
                     b.Navigation("Departments");
-
-                    b.Navigation("Roles");
                 });
 
             modelBuilder.Entity("FireCodingDesign.Models.Customer", b =>
@@ -590,6 +584,13 @@ namespace FireCodingDesign.Migrations
                         .HasForeignKey("CompanyId");
 
                     b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.HasOne("FireCodingDesign.Models.AdministrationModel", null)
+                        .WithMany("Roles")
+                        .HasForeignKey("AdministrationModelId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -641,6 +642,11 @@ namespace FireCodingDesign.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("FireCodingDesign.Models.AdministrationModel", b =>
+                {
+                    b.Navigation("Roles");
                 });
 
             modelBuilder.Entity("FireCodingDesign.Models.Company", b =>

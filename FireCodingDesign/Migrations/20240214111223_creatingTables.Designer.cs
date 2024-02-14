@@ -4,6 +4,7 @@ using FireCodingDesign.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,13 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FireCodingDesign.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240214111223_creatingTables")]
+    partial class creatingTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasAnnotation("ProductVersion", "8.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -305,37 +308,37 @@ namespace FireCodingDesign.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "834b532b-91c4-45b0-96ec-5dd307b4c690",
+                            Id = "9e29b191-bdbd-457a-9d54-48188e195022",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
-                            Id = "453ad47c-6c64-47b4-b904-70d435964cb9",
+                            Id = "8a723bb5-be15-42d6-bdfe-c4a3b4421ae3",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "bc4afa7a-a76b-4ab9-80e3-e89cd09b536f",
+                            Id = "4a250674-8975-4761-b73d-9711beb7328e",
                             Name = "PowerUser",
                             NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "4af80b46-1eec-4824-a84b-2c2a5236c7fe",
+                            Id = "259ddb9f-18ad-4d3d-b8f1-d20208b2c512",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "eca30d45-1c44-46d9-8020-e7e9e97afd33",
+                            Id = "f3138f48-5292-4fdc-880b-ae7aaf09d0b5",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "46ef890e-a856-4a80-8a01-ec4c3176222c",
+                            Id = "888866bb-78e0-4a87-9ab4-d384089870ce",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });

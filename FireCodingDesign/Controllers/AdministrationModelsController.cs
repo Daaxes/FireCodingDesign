@@ -30,9 +30,9 @@ namespace FireCodingDesign.Controllers
 
 		// GET: AdministrationModels
 
-		public async Task<ShareDataModel> GetSharedDataAsync()
+		public async Task<ShareDataModel> SyncSharedDataIdentityAsync()
 		{
-			int idCounter = 1;
+//			int idCounter = 1;
 			    ShareDataModel model = new ShareDataModel
 			    {
 				IdentityUserAndRoleList = (_roleManager.Roles == null || _userManager.Users == null) ? new List<AdministrationModel>() : _userManager.Users
@@ -40,17 +40,18 @@ namespace FireCodingDesign.Controllers
 					{
 						UserId = u.Id,
 						UserName = u.UserName,
+                        Roles = _roleManager.Roles.ToList(),
 						Role = _context.UserRoles
 							.Where(ur => ur.UserId == u.Id)
 							.Join(_roleManager.Roles, rm => rm.RoleId, ur => ur.Id, (ur, r) => r.Name)
 							.FirstOrDefault(),
 					}).ToList(),
 			    };
-
-            using (var context = new ApplicationDbContext())
-            {
-                await SaveIdentityUserAndRole(model.IdentityUserAndRoleList, context);
-            }
+                
+            //using (var context = new ApplicationDbContext())
+            //{
+                await SaveIdentityUserAndRole(model.IdentityUserAndRoleList, _context);
+//            }
 
 
             return model;
@@ -89,14 +90,51 @@ namespace FireCodingDesign.Controllers
 				//await _context.SaveChangesAsync();
 	 	return RedirectToAction(nameof(Index));
 		}
-  //  	return View(administrationModel);
+        //  	return View(administrationModel);
 
-		//}
-		public async Task<IActionResult> Index()
+        public ShareDataModel GetSharedDataIdentity()
         {
-			ShareDataModel model = await GetSharedDataAsync();
-			return View(await _context.AdministrationModel.ToListAsync());
+            ShareDataModel model = new ShareDataModel
+            {
+                IdentityUserAndRoleList = (_roleManager.Roles == null || _userManager.Users == null) ? new List<AdministrationModel>() : _context.AdministrationModel
+                    .Select(u => new AdministrationModel
+                    {
+                        Id = u.Id,
+                        Active = u.Active,
+                        UserId = u.UserId,
+                        UserName = u.UserName,
+                        FirstName = u.FirstName,
+                        LastName = u.LastName,
+                        Email = u.Email,
+                        Mobile = u.Mobile,
+                        DepartmentId = u.DepartmentId,
+                        Departments = u.Departments,
+                        RoleId = u.RoleId,
+                        Role = u.Role,
+                        Roles = u.Roles.ToList(),
+
+                        //.Where(ur => ur.UserId == u.Id)
+                        //.Join(_roleManager.Roles, rm => rm.RoleId, ur => ur.Id, (ur, r) => r.Name)
+                        //.FirstOrDefault(),
+                    }).ToList(),
+            };
+            return model;
         }
+
+        //}
+        public async Task<IActionResult> Index()
+        {
+			ShareDataModel model = await SyncSharedDataIdentityAsync();
+
+            var sharedData = new ShareDataModel
+            {
+                IdentityUserAndRoleList = (_context.AdministrationModel == null) ? new List<AdministrationModel>() : _context.AdministrationModel.ToList(),
+            };
+
+            return View(sharedData);
+        }
+
+
 
         // GET: AdministrationModels/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -146,13 +184,34 @@ namespace FireCodingDesign.Controllers
                 return NotFound();
             }
 
-            var administrationModel = await _context.AdministrationModel.FindAsync(id);
+            ShareDataModel sharedData = await SyncSharedDataIdentityAsync();
+            var model = GetSharedDataIdentity();
+            //var sharedData = new ShareDataModel
+            //{
+            //    IdentityUserAndRoleList = (_context.AdministrationModel == null) ? new List<AdministrationModel>() : await _context.AdministrationModel.FindAsync(id),
+            //};
 
-			if (administrationModel == null)
+            ShareDataModel ChoosedUser = new ShareDataModel
             {
-                return NotFound();
-            }
-            return View(administrationModel);
+                IdentityUserAndRoleList = model.IdentityUserAndRoleList
+                                                         .Where(u => u.Id == id)
+                                                         .ToList(),
+            };
+
+
+            //ShareDataModel model = null;
+            //model.IdentityUserAndRoleList = sharedData.IdentityUserAndRoleList
+            //                                     .Where(u => u.Id == id)
+            //                                     .ToList();
+            //            ShareDataModel shareDataModel = 
+            //            var administrationModel = await _context.AdministrationModel.FindAsync(id);
+
+            //if (administrationModel == null)
+            //         {
+            //             return NotFound();
+            //         }
+            return View(ChoosedUser);
+//            return View(administrationModel);
         }
 
         // POST: AdministrationModels/Edit/5
