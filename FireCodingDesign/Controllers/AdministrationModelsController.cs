@@ -240,15 +240,15 @@ namespace FireCodingDesign.Controllers
 
 					if (existingUser != null)
 					{ // saveIdentityUser skall användas för vald användare
-                        existingUser.FirstName = userWithRoles.FirstName;
-                        existingUser.LastName = userWithRoles.LastName;
-                        existingUser.Email = userWithRoles.Email;
-                        existingUser.Roles = userWithRoles.Roles;
-                        existingUser.Role = userWithRoles.Role;
-                        existingUser.RoleId = userWithRoles.RoleId;
-                        existingUser.Mobile = userWithRoles.Mobile;
-                        existingUser.Departments = userWithRoles.Departments;
-                        existingUser.DepartmentId = userWithRoles.DepartmentId;
+                        //existingUser.FirstName = userWithRoles.FirstName;
+                        //existingUser.LastName = userWithRoles.LastName;
+                        //existingUser.Email = userWithRoles.Email;
+                        //existingUser.Roles = userWithRoles.Roles;
+                        //existingUser.Role = userWithRoles.Role;
+                        //existingUser.RoleId = userWithRoles.RoleId;
+                        //existingUser.Mobile = userWithRoles.Mobile;
+                        //existingUser.Departments = userWithRoles.Departments;
+                        //existingUser.DepartmentId = userWithRoles.DepartmentId;
                     }
                     else
 					{
@@ -275,7 +275,7 @@ namespace FireCodingDesign.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(existing);
+            return View(administrationModel);
         }
 
         // GET: AdministrationModels/Delete/5
