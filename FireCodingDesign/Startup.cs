@@ -1,5 +1,7 @@
 ﻿using FireCodingDesign.Data;
+using FireCodingDesign.Models;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace FireCodingDesign
@@ -25,9 +27,10 @@ namespace FireCodingDesign
 			{
 				options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
 			});
+			//			services.AddIdentity<IdentityUser, IdentityRole>();
+			services.AddIdentity<ApplicationUser, IdentityRole>();
 
-
-			services.AddControllersWithViews(); // Exempel: Lägg till MVC-tjänster
+            services.AddControllersWithViews(); // Exempel: Lägg till MVC-tjänster
 		}
 	}
 }

@@ -20,7 +20,7 @@ namespace FireCodingDesign.Controllers
         }
 
         // GET: Companies
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var sharedData = new ShareDataModel
             {

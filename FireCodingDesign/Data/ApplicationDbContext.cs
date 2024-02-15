@@ -22,8 +22,10 @@ namespace FireCodingDesign.Data
         public DbSet<FireCodingDesign.Models.Order> Order { get; set; } = default!;
         public DbSet<FireCodingDesign.Models.Department> Department { get; set; } = default!;
 		public DbSet<FireCodingDesign.Models.AdministrationModel> AdministrationModel { get; set; } = default!;
+        public DbSet<IdentityRole> Role { get; set; }
+//        public DbSet<ApplicationUser> User { get; set; }
 
-		protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             
@@ -43,7 +45,7 @@ namespace FireCodingDesign.Data
             // Adding Roles to AspNetRoles
             builder.Entity<IdentityRole>().HasData(new IdentityRole
             {
-                Name = "SuperAdmin",
+               Name = "SuperAdmin",
                 NormalizedName = "SUPERADMIN"
             });
 
@@ -76,7 +78,13 @@ namespace FireCodingDesign.Data
                 Name = "Customer",
                 NormalizedName = "CUSTOMER"
             });
-            
+
+            builder.Entity<IdentityRole>().HasData(new IdentityRole
+            {
+                Name = "None",
+                NormalizedName = "NONE"
+            });
+
             // Adding Companies
             builder.Entity<Company>().HasData(new Company
             {

@@ -1,9 +1,10 @@
-﻿@model IEnumerable<FireCodingDesign.Models.AdministrationModel>
+﻿@model FireCodingDesign.Models.ShareDataModel
+@* @model IEnumerable<FireCodingDesign.Models.AdministrationModel> *@
 
-@{
+@* @{
     ViewData["Title"] = "Index";
 }
-
+ *@
 <h1>Administration Index</h1>
 
 <p>
@@ -13,38 +14,32 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.UserId)
+                @Html.DisplayNameFor(model => model.IdentityUserAndRoleList.FirstOrDefault().UserName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserName)
+                @Html.DisplayNameFor(model => model.IdentityUserAndRoleList.FirstOrDefault().FirstName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
+                @Html.DisplayNameFor(model => model.IdentityUserAndRoleList.FirstOrDefault().LastName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LastName)
+                @Html.DisplayNameFor(model => model.IdentityUserAndRoleList.FirstOrDefault().Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                @Html.DisplayNameFor(model => model.IdentityUserAndRoleList.FirstOrDefault().Mobile)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Mobile)
+                @Html.DisplayNameFor(model => model.IdentityUserAndRoleList.FirstOrDefault().Departments)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DepartmentId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RoleId)
+                @Html.DisplayNameFor(model => model.IdentityUserAndRoleList.FirstOrDefault().Role)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.IdentityUserAndRoleList) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>
@@ -58,13 +53,13 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Mobile)
+                 @Html.DisplayFor(modelItem => item.Mobile)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DepartmentId)
+                @Html.DisplayFor(modelItem => item.Departments.DepartmentName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RoleId)
+                @Html.DisplayFor(modelItem => item.Role)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

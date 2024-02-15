@@ -8,25 +8,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FireCodingDesign.Migrations
 {
     /// <inheritdoc />
-    public partial class creatingTables : Migration
+    public partial class creatingTables2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "AspNetRoles",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
@@ -90,27 +76,6 @@ namespace FireCodingDesign.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetRoleClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
@@ -145,30 +110,6 @@ namespace FireCodingDesign.Migrations
                     table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
                         name: "FK_AspNetUserLogins_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserRoles",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -244,26 +185,20 @@ namespace FireCodingDesign.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Active = table.Column<bool>(type: "bit", nullable: false),
+                    Active = table.Column<bool>(type: "bit", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Mobile = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DepartmentId = table.Column<int>(type: "int", nullable: true),
                     RoleId = table.Column<int>(type: "int", nullable: true),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RolesId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    DepartmentId = table.Column<int>(type: "int", nullable: true)
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AdministrationModel", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AdministrationModel_AspNetRoles_RolesId",
-                        column: x => x.RolesId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_AdministrationModel_Department_DepartmentId",
                         column: x => x.DepartmentId,
@@ -293,17 +228,83 @@ namespace FireCodingDesign.Migrations
                         principalColumn: "CustomerId");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "AspNetRoles",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AdministrationModelId = table.Column<int>(type: "int", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoles_AdministrationModel_AdministrationModelId",
+                        column: x => x.AdministrationModelId,
+                        principalTable: "AdministrationModel",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                columns: new[] { "Id", "AdministrationModelId", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "012b402e-70e9-4837-830f-ca402862351c", null, "User", "USER" },
-                    { "298980f5-5bfb-4021-84a2-5812ebdd7ded", null, "PowerUser", "POWERUSER" },
-                    { "4a3203b3-9a5a-4b0d-8d7e-5ddf1c95f14c", null, "Customer", "CUSTOMER" },
-                    { "5a6a1d47-1d82-44a9-9b32-8e2886bfe02b", null, "Owner", "OWNER" },
-                    { "a6f852df-5f59-4b7a-b154-168fe4debbef", null, "Admin", "ADMIN" },
-                    { "cec1061b-fe3c-4ce2-84b4-bd0bb946462c", null, "SuperAdmin", "SUPERADMIN" }
+                    { "2f1371ae-9404-49f8-a533-8fc7339315cf", null, null, "Admin", "ADMIN" },
+                    { "9ddd6fbd-ffbb-4941-b132-947227de4e85", null, null, "SuperAdmin", "SUPERADMIN" },
+                    { "bedebea1-64b8-404a-aaae-0ed49bd2aeb3", null, null, "PowerUser", "POWERUSER" },
+                    { "d23741ef-b61a-41ee-983f-df3001b67b5c", null, null, "None", "NONE" },
+                    { "f5f913e5-c663-4c8c-9966-9eb80e3c22ff", null, null, "Customer", "CUSTOMER" },
+                    { "f6cdb465-f754-4d70-a6bd-86149aaf6186", null, null, "User", "USER" },
+                    { "f8dbfdda-f8a7-49e1-b23b-1e282356c7ea", null, null, "Owner", "OWNER" }
                 });
 
             migrationBuilder.InsertData(
@@ -333,14 +334,14 @@ namespace FireCodingDesign.Migrations
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AdministrationModel_RolesId",
-                table: "AdministrationModel",
-                column: "RolesId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetRoles_AdministrationModelId",
+                table: "AspNetRoles",
+                column: "AdministrationModelId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
@@ -396,9 +397,6 @@ namespace FireCodingDesign.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AdministrationModel");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -420,9 +418,6 @@ namespace FireCodingDesign.Migrations
                 name: "Provider");
 
             migrationBuilder.DropTable(
-                name: "Department");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -432,7 +427,13 @@ namespace FireCodingDesign.Migrations
                 name: "Customer");
 
             migrationBuilder.DropTable(
+                name: "AdministrationModel");
+
+            migrationBuilder.DropTable(
                 name: "Company");
+
+            migrationBuilder.DropTable(
+                name: "Department");
         }
     }
 }

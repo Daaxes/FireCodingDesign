@@ -1,5 +1,5 @@
-﻿@model FireCodingDesign.Models.AdministrationModel
-
+﻿@* @model FireCodingDesign.Models.AdministrationModel *@
+@model FireCodingDesign.Models.ShareDataModel
 @{
     ViewData["Title"] = "Edit";
 }
@@ -12,46 +12,48 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-@*             <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
- *@            <div class="form-group">
-                <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
+            <input type="hidden" asp-for="IdentityUserAndRoleList.FirstOrDefault().Id" />
+            <span asp-validation-for="IdentityUserAndRoleList.FirstOrDefault().Id" class="text-danger"></span>
+
+            <div class="form-group">
+                @* <label asp-for="IdentityUserAndRoleList.FirstOrDefault().UserId" class="control-label"></label> *@
+                <input type="hidden" asp-for="IdentityUserAndRoleList.FirstOrDefault().UserId" class="form-control" />
+                <span asp-validation-for="IdentityUserAndRoleList.FirstOrDefault().UserId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+                <label asp-for="IdentityUserAndRoleList.FirstOrDefault().UserName" class="control-label"></label>
+                <input disabled="true" asp-for="IdentityUserAndRoleList.FirstOrDefault().UserName" class="form-control" />
+                <span asp-validation-for="IdentityUserAndRoleList.FirstOrDefault().UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+                <label asp-for="IdentityUserAndRoleList.FirstOrDefault().FirstName" class="control-label"></label>
+                <input asp-for="IdentityUserAndRoleList.FirstOrDefault().FirstName" class="form-control" />
+                <span asp-validation-for="IdentityUserAndRoleList.FirstOrDefault().FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label asp-for="IdentityUserAndRoleList.FirstOrDefault().LastName" class="control-label"></label>
+                <input asp-for="IdentityUserAndRoleList.FirstOrDefault().LastName" class="form-control" />
+                <span asp-validation-for="IdentityUserAndRoleList.FirstOrDefault().LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Mobile" class="control-label"></label>
-                <input asp-for="Mobile" class="form-control" />
-                <span asp-validation-for="Mobile" class="text-danger"></span>
+                <label asp-for="IdentityUserAndRoleList.FirstOrDefault().Email" class="control-label"></label>
+                <input asp-for="IdentityUserAndRoleList.FirstOrDefault().Email" class="form-control" />
+                <span asp-validation-for="IdentityUserAndRoleList.FirstOrDefault().Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DepartmentId" class="control-label"></label>
-                <input asp-for="DepartmentId" class="form-control" />
-                <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                <label asp-for="IdentityUserAndRoleList.FirstOrDefault().Mobile" class="control-label"></label>
+                <input asp-for="IdentityUserAndRoleList.FirstOrDefault().Mobile" class="form-control" />
+                <span asp-validation-for="IdentityUserAndRoleList.FirstOrDefault().Mobile" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RoleId" class="control-label"></label>
-                <input asp-for="RoleId" class="form-control" />
-                <span asp-validation-for="RoleId" class="text-danger"></span>
+                <label asp-for="IdentityUserAndRoleList.FirstOrDefault().DepartmentId" class="control-label"></label>
+                <select asp-for="IdentityUserAndRoleList.FirstOrDefault().Departments.DepartmentName" class="form-control" asp-items="ViewBag.Departments"></select>
+                <span asp-validation-for="IdentityUserAndRoleList.FirstOrDefault().DepartmentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdentityUserAndRoleList.FirstOrDefault().Role" class="control-label"></label>
+                <select asp-for="IdentityUserAndRoleList.FirstOrDefault().Role" asp-items='new SelectList(Model.IdentityUserAndRoleList.FirstOrDefault().Roles, "Name", "Name")' class="form-control"></select>
+                <span asp-validation-for="IdentityUserAndRoleList.FirstOrDefault().Role" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

@@ -20,5 +20,9 @@ namespace FireCodingDesign.Models
             //            IdentityList = null;
         }
 
+    //    public static implicit operator ShareDataModel(ShareDataModel v)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
     }
 }
