@@ -226,6 +226,7 @@ namespace FireCodingDesign.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,UserName,Name,Mobile,Department,Role")] AdministrationModel administrationModel)
         {
+            ShareDataModel? model = null;
             if (id != administrationModel.Id)
             {
                 return NotFound();
@@ -235,20 +236,22 @@ namespace FireCodingDesign.Controllers
             {
                 try
                 {
-                    //List existingUser = existingUser;
-                    var existingUser = await _userManager.FindByIdAsync(administrationModel.UserId);
-
-					if (existingUser != null)
-					{ // saveIdentityUser skall användas för vald användare
-                        //existingUser.FirstName = userWithRoles.FirstName;
-                        //existingUser.LastName = userWithRoles.LastName;
-                        //existingUser.Email = userWithRoles.Email;
-                        //existingUser.Roles = userWithRoles.Roles;
-                        //existingUser.Role = userWithRoles.Role;
-                        //existingUser.RoleId = userWithRoles.RoleId;
-                        //existingUser.Mobile = userWithRoles.Mobile;
-                        //existingUser.Departments = userWithRoles.Departments;
-                        //existingUser.DepartmentId = userWithRoles.DepartmentId;
+                    //var existingUser = await _userManager.FindByIdAsync(administrationModel.UserId);
+                    var existingUser = await _context.AdministrationModel
+                                                            .FirstOrDefaultAsync(u => u.UserId == administrationModel.UserId);
+                    if (existingUser != null)
+					{
+                        IdentityUser user = await _userManager.FindByNameAsync(existingUser.UserName);
+                        await _userManager.AddToRoleAsync(user, administrationModel.Role);
+                        existingUser.FirstName = administrationModel.FirstName;
+                        existingUser.LastName = administrationModel.LastName;
+                        existingUser.Email = administrationModel.Email;
+                        existingUser.Roles = administrationModel.Roles;
+                        existingUser.Role = administrationModel.Role;
+                        existingUser.RoleId = administrationModel.RoleId;
+                        existingUser.Mobile = administrationModel.Mobile;
+                        existingUser.Departments = administrationModel.Departments;
+                        existingUser.DepartmentId = administrationModel.DepartmentId;
                     }
                     else
 					{
@@ -256,11 +259,10 @@ namespace FireCodingDesign.Controllers
                     }
 
                     //					_context.Update(administrationModel);
-                    //_context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.AdministrationModel ON;");
-                    //await _context.SaveChangesAsync();
-                    //_context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.AdministrationModel OFF;");
-                    //                    transaction.Commit();
-
+                    _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.AdministrationModel ON;");
+                    await _context.SaveChangesAsync();
+                    _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.AdministrationModel OFF;");
+                    //transaction.Commit();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -273,9 +275,11 @@ namespace FireCodingDesign.Controllers
                         throw;
                     }
                 }
+                model = GetSharedDataIdentity();
                 return RedirectToAction(nameof(Index));
             }
-            return View(administrationModel);
+            model = GetSharedDataIdentity();
+            return View(model);
         }
 
         // GET: AdministrationModels/Delete/5
