@@ -224,9 +224,9 @@ namespace FireCodingDesign.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,UserName,Name,Mobile,Department,Role")] AdministrationModel administrationModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,UserName,FirstName,LastName,Mobile,Email,Department,Role")] AdministrationModel administrationModel)
         {
-            ShareDataModel? model = null;
+            ShareDataModel? adminuser = null;
             if (id != administrationModel.Id)
             {
                 return NotFound();
@@ -236,32 +236,93 @@ namespace FireCodingDesign.Controllers
             {
                 try
                 {
-                    //var existingUser = await _userManager.FindByIdAsync(administrationModel.UserId);
                     var existingUser = await _context.AdministrationModel
-                                                            .FirstOrDefaultAsync(u => u.UserId == administrationModel.UserId);
+                        .FirstOrDefaultAsync(u => u.UserId == administrationModel.UserId);
+
                     if (existingUser != null)
-					{
-                        IdentityUser user = await _userManager.FindByNameAsync(existingUser.UserName);
-                        await _userManager.AddToRoleAsync(user, administrationModel.Role);
-                        existingUser.FirstName = administrationModel.FirstName;
-                        existingUser.LastName = administrationModel.LastName;
-                        existingUser.Email = administrationModel.Email;
-                        existingUser.Roles = administrationModel.Roles;
-                        existingUser.Role = administrationModel.Role;
-                        existingUser.RoleId = administrationModel.RoleId;
-                        existingUser.Mobile = administrationModel.Mobile;
-                        existingUser.Departments = administrationModel.Departments;
-                        existingUser.DepartmentId = administrationModel.DepartmentId;
+                    {
+                        //ApplicationUser user = await _userManager.FindByNameAsync(existingUser.UserName) as ApplicationUser;
+                        ApplicationUser? user = await _userManager.FindByIdAsync(existingUser.UserId) as ApplicationUser; // Fel
+
+                        if (user != null)
+                        {
+                            // Get current roles of the user
+                            var currentRoles = await _userManager.GetRolesAsync(user);
+
+                            // Remove existing roles
+                            await _userManager.RemoveFromRolesAsync(user, currentRoles);
+
+                            // Add the new role
+                            await _userManager.AddToRoleAsync(user, administrationModel.Role);
+
+                            // Update user properties
+//                            ApplicationUser appUser = await _userManager.FindByNameAsync(existingUser.UserName);
+                            user.FirstName = administrationModel.FirstName;
+                            user.LastName = administrationModel.LastName;
+                            user.Email = administrationModel.Email;
+
+                            // Use _userManager.UpdateAsync to update the user in Identity system
+                            var result = await _userManager.UpdateAsync(user);
+                            if (!result.Succeeded)
+                            {
+                                // Handle the errors
+                            }
+
+                            // Update other properties in your AdministrationModel
+                            existingUser.Roles = administrationModel.Roles;
+                            existingUser.Role = administrationModel.Role;
+                            existingUser.RoleId = administrationModel.RoleId;
+                            existingUser.Mobile = administrationModel.Mobile;
+                            existingUser.Departments = administrationModel.Departments;
+                            existingUser.DepartmentId = administrationModel.DepartmentId;
+
+                            _context.Attach(existingUser); // Attach the existingUser to the context
+                            await _context.SaveChangesAsync();
+                        }
+                        else
+                        {
+                            return NotFound();
+                        }
                     }
                     else
-					{
+                    {
                         return NotFound();
                     }
 
-                    //					_context.Update(administrationModel);
-                    _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.AdministrationModel ON;");
-                    await _context.SaveChangesAsync();
-                    _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.AdministrationModel OFF;");
+                        //					_context.Update(administrationModel);
+
+
+                        //                    var existingUser = await _userManager.FindByIdAsync(administrationModel.UserId);
+                        //               var existingUser = await _context.AdministrationModel
+                        //                                                       .FirstOrDefaultAsync(u => u.UserId == administrationModel.UserId);
+                        //               if (existingUser != null)
+                        //{
+                        //                   IdentityUser? user = await _userManager.FindByNameAsync(existingUser.UserName);
+                        //                   // Get current roles of the user
+                        //                   var currentRoles = await _userManager.GetRolesAsync(user);
+                        //                   // Remove existing roles
+                        //                   await _userManager.RemoveFromRolesAsync(user, currentRoles);
+                        //                   // Add the new role
+                        //                   await _userManager.AddToRoleAsync(user, administrationModel.Role);
+                        //                   existingUser.FirstName = administrationModel.FirstName;
+                        //                   existingUser.LastName = administrationModel.LastName;
+                        //                   existingUser.Email = administrationModel.Email;
+                        //                   existingUser.Roles = administrationModel.Roles;
+                        //                   existingUser.Role = administrationModel.Role;
+                        //                   existingUser.RoleId = administrationModel.RoleId;
+                        //                   existingUser.Mobile = administrationModel.Mobile;
+                        //                   existingUser.Departments = administrationModel.Departments;
+                        //                   existingUser.DepartmentId = administrationModel.DepartmentId;
+                        //               }
+                        //               else
+                        //{
+                        //                   return NotFound();
+                        //               }
+
+                        //               //					_context.Update(administrationModel);
+                    //    _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.AdministrationModel ON;");
+                    //await _context.SaveChangesAsync();
+                    //_context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.AdministrationModel OFF;");
                     //transaction.Commit();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -275,11 +336,11 @@ namespace FireCodingDesign.Controllers
                         throw;
                     }
                 }
-                model = GetSharedDataIdentity();
+                adminuser = GetSharedDataIdentity();
                 return RedirectToAction(nameof(Index));
             }
-            model = GetSharedDataIdentity();
-            return View(model);
+            adminuser = GetSharedDataIdentity();
+            return View(administrationModel);
         }
 
         // GET: AdministrationModels/Delete/5

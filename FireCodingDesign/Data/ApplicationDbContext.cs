@@ -7,6 +7,8 @@ namespace FireCodingDesign.Data
 {
     public class ApplicationDbContext : IdentityDbContext <IdentityUser>
     {
+        internal object administrationmodel;
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

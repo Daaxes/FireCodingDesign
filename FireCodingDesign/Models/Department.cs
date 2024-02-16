@@ -6,6 +6,5 @@
         public string? DepartmentName { get; set; }
         public string? DepartmentDescription { get; set;}
         public int? AdministrationId { get; set; }
-        public List<AdministrationModel>? Administration { get; set; }
     }
 }

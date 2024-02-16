@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using FireCodingDesign.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
+using System;
 
 namespace FireCodingDesign.Models
 {
@@ -26,3 +31,41 @@ namespace FireCodingDesign.Models
     //    }
     }
 }
+//public class ShareDataModel
+//{
+//    // Andra egenskaper i ShareDataModel
+
+//    public List<Department> DepartmentsList { get; set; }
+//}
+//Uppdatera Edit Action i din Controller för att inkludera avdelningslistan när du skapar ShareDataModel:
+
+//csharp
+//Copy code
+//public IActionResult Edit(int id)
+//{
+//    var administrationModel = // Hämta administrationModel baserat på id
+//    var departmentsList = _context.Departments.ToList(); // Hämta alla avdelningar från din databas
+
+//    var model = new ShareDataModel
+//    {
+//        AdministrationModel = administrationModel,
+//        DepartmentsList = departmentsList
+//    };
+
+//    return View(model);
+//}
+//Uppdatera Edit View för att använda DepartmentsList från ShareDataModel:
+
+//html
+//Copy code
+//@model ShareDataModel
+
+//<!-- Annan kod här -->
+
+//<div class= "form-group" >
+//    < label asp -for= "AdministrationModel.DepartmentId" class= "control-label" ></ label >
+//    < select asp -for= "AdministrationModel.DepartmentId" asp - items = 'new SelectList(Model.DepartmentsList, "Id", "DepartmentName", Model.AdministrationModel.DepartmentId)' class= "form-control" ></ select >
+//    < span asp - validation -for= "AdministrationModel.DepartmentId" class= "text-danger" ></ span >
+//</ div >
+
+//< !--Annan kod här -->

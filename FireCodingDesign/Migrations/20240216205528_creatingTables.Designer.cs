@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FireCodingDesign.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240215141208_creatingTables2")]
-    partial class creatingTables2
+    [Migration("20240216205528_creatingTables")]
+    partial class creatingTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,8 +64,6 @@ namespace FireCodingDesign.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
 
                     b.ToTable("AdministrationModel");
                 });
@@ -180,6 +178,9 @@ namespace FireCodingDesign.Migrations
                     b.Property<int?>("AdministrationId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("AdministrationModelId")
+                        .HasColumnType("int");
+
                     b.Property<string>("DepartmentDescription")
                         .HasColumnType("nvarchar(max)");
 
@@ -187,6 +188,8 @@ namespace FireCodingDesign.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AdministrationModelId");
 
                     b.ToTable("Department");
 
@@ -308,43 +311,43 @@ namespace FireCodingDesign.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9ddd6fbd-ffbb-4941-b132-947227de4e85",
+                            Id = "c38b0734-c03b-45ea-be73-5b0009a9629c",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
-                            Id = "2f1371ae-9404-49f8-a533-8fc7339315cf",
+                            Id = "03dbc52a-1f37-4e2c-8d5d-2a091e80c9cb",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "bedebea1-64b8-404a-aaae-0ed49bd2aeb3",
+                            Id = "fb7cd699-36b9-4b6c-8aa2-ff8e0ba15cb7",
                             Name = "PowerUser",
                             NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "f8dbfdda-f8a7-49e1-b23b-1e282356c7ea",
+                            Id = "058b724b-8a15-4e82-bc3c-75454526dba6",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "f6cdb465-f754-4d70-a6bd-86149aaf6186",
+                            Id = "3d425c6f-c556-4a2a-8a2b-ee66fded978a",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "f5f913e5-c663-4c8c-9966-9eb80e3c22ff",
+                            Id = "09385273-d956-4c6f-8507-fb40cae0c938",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "d23741ef-b61a-41ee-983f-df3001b67b5c",
+                            Id = "c8391fdf-353f-46b0-9493-78373991e769",
                             Name = "None",
                             NormalizedName = "NONE"
                         });
@@ -539,30 +542,18 @@ namespace FireCodingDesign.Migrations
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Mobile")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
-                });
-
-            modelBuilder.Entity("FireCodingDesign.Models.AdministrationModel", b =>
-                {
-                    b.HasOne("FireCodingDesign.Models.Department", "Departments")
-                        .WithMany("Administration")
-                        .HasForeignKey("DepartmentId");
-
-                    b.Navigation("Departments");
                 });
 
             modelBuilder.Entity("FireCodingDesign.Models.Customer", b =>
@@ -572,6 +563,13 @@ namespace FireCodingDesign.Migrations
                         .HasForeignKey("CompanyId");
 
                     b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("FireCodingDesign.Models.Department", b =>
+                {
+                    b.HasOne("FireCodingDesign.Models.AdministrationModel", null)
+                        .WithMany("Departments")
+                        .HasForeignKey("AdministrationModelId");
                 });
 
             modelBuilder.Entity("FireCodingDesign.Models.Order", b =>
@@ -652,6 +650,8 @@ namespace FireCodingDesign.Migrations
 
             modelBuilder.Entity("FireCodingDesign.Models.AdministrationModel", b =>
                 {
+                    b.Navigation("Departments");
+
                     b.Navigation("Roles");
                 });
 
@@ -665,11 +665,6 @@ namespace FireCodingDesign.Migrations
             modelBuilder.Entity("FireCodingDesign.Models.Customer", b =>
                 {
                     b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("FireCodingDesign.Models.Department", b =>
-                {
-                    b.Navigation("Administration");
                 });
 #pragma warning restore 612, 618
         }

@@ -21,7 +21,8 @@ namespace FireCodingDesign.Models
         public string? Email { get; set; }
         public string? Mobile { get; set; }
         public int? DepartmentId { get; set; }
-        public Department? Departments { get; set; }
+//        public Department? Departments { get; set; }
+        public List<Department>? Departments { get; set; }
         public int? RoleId { get; set; }
         public string? Role { get; set; }
 		public List<IdentityRole>? Roles { get; set; }

@@ -22,7 +22,7 @@ namespace FireCodingDesign.Controllers
         // GET: Departments
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Department.Include(d => d.Administration);
+            var applicationDbContext = _context.Department.Include(d => d.AdministrationId);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -35,7 +35,7 @@ namespace FireCodingDesign.Controllers
             }
 
             var department = await _context.Department
-                .Include(d => d.Administration)
+                .Include(d => d.AdministrationId)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (department == null)
             {
@@ -131,7 +131,7 @@ namespace FireCodingDesign.Controllers
             }
 
             var department = await _context.Department
-                .Include(d => d.Administration)
+                .Include(d => d.AdministrationId)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (department == null)
             {
