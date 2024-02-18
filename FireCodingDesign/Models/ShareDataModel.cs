@@ -16,6 +16,8 @@ namespace FireCodingDesign.Models
         public List<IdentityRole>? IdentityRolesList { get; set; }
         public List<IdentityUser>? IdentityUsersList { get; set; }
         public List<AdministrationModel>? IdentityUserAndRoleList { get; set; }
+        public List<Department>? DepartmentsList { get; set; }
+
         public void clear()
         {
             CustomerList = null;//.Clear();

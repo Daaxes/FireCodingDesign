@@ -9,6 +9,7 @@ using FireCodingDesign.Data;
 using FireCodingDesign.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.CodeAnalysis;
 
 namespace FireCodingDesign.Controllers
 {
@@ -41,20 +42,35 @@ namespace FireCodingDesign.Controllers
 					{
 						UserId = u.Id,
 						UserName = u.UserName,
+                        Email = u.Email,
                         FirstName = (u as ApplicationUser).FirstName,
                         LastName = (u as ApplicationUser).LastName,
                         Mobile = (u as ApplicationUser).Mobile,
-                        Roles = _roleManager.Roles.ToList(),
+                         Roles = _roleManager.Roles.ToList(),
 						Role = _context.UserRoles
 							.Where(ur => ur.UserId == u.Id)
 							.Join(_roleManager.Roles, rm => rm.RoleId, ur => ur.Id, (ur, r) => r.Name)
 							.FirstOrDefault(),
 					}).ToList(),
 			    };
-                
+
+
+            foreach (var user in model.IdentityUserAndRoleList)
+            {
+                var userDetails = _context.AdministrationModel
+                    .FirstOrDefault(u => u.UserId == user.UserId);
+
+                if (userDetails != null)
+                {
+                    user.DepartmentId = userDetails.DepartmentId;
+                    user.DepartmentName = userDetails.DepartmentName;
+                }
+            }            //DepartmentId = (u is AdministrationModel)?.DepartmentId,
+                         //DepartmentName = (u is AdministrationModel)?.DepartmentName,
+
             //using (var context = new ApplicationDbContext())
             //{
-                await SaveIdentityUserAndRole(model.IdentityUserAndRoleList, _context);
+            await SaveIdentityUserAndRole(model.IdentityUserAndRoleList, _context);
 //            }
 
 
@@ -113,7 +129,8 @@ namespace FireCodingDesign.Controllers
                         Email = u.Email,
                         Mobile = u.Mobile,
                         DepartmentId = u.DepartmentId,
-                        Departments = u.Departments,
+                        DepartmentName = u.DepartmentName,
+                        Departments = _context.Department.ToList(),
                         RoleId = u.RoleId,
                         Role = u.Role,
                         Roles = _roleManager.Roles.ToList(),
@@ -134,6 +151,7 @@ namespace FireCodingDesign.Controllers
             var sharedData = new ShareDataModel
             {
                 IdentityUserAndRoleList = (_context.AdministrationModel == null) ? new List<AdministrationModel>() : _context.AdministrationModel.ToList(),
+                DepartmentsList = (_context.Department == null) ? new List<Department>() : _context.Department.ToList(),
             };
 
             return View(sharedData);
@@ -141,45 +159,45 @@ namespace FireCodingDesign.Controllers
 
 
 
-        // GET: AdministrationModels/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //// GET: AdministrationModels/Details/5
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var administrationModel = await _context.AdministrationModel
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (administrationModel == null)
-            {
-                return NotFound();
-            }
+        //    var administrationModel = await _context.AdministrationModel
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (administrationModel == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(administrationModel);
-        }
+        //    return View(administrationModel);
+        //}
 
-        // GET: AdministrationModels/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
+        //// GET: AdministrationModels/Create
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
 
-        // POST: AdministrationModels/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserId,UserName,Name,Mobile,Department,Role")] AdministrationModel administrationModel)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(administrationModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(administrationModel);
-        }
+        //// POST: AdministrationModels/Create
+        //// To protect from overposting attacks, enable the specific properties you want to bind to.
+        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("Id,UserId,UserName,Name,Mobile,Department,Role")] AdministrationModel administrationModel)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(administrationModel);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(administrationModel);
+        //}
 
         // GET: AdministrationModels/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -191,32 +209,17 @@ namespace FireCodingDesign.Controllers
 
             ShareDataModel sharedData = await SyncSharedDataIdentityAsync();
             var model = GetSharedDataIdentity();
-            //var sharedData = new ShareDataModel
-            //{
-            //    IdentityUserAndRoleList = (_context.AdministrationModel == null) ? new List<AdministrationModel>() : await _context.AdministrationModel.FindAsync(id),
-            //};
 
             ShareDataModel ChoosedUser = new ShareDataModel
             {
+                DepartmentsList = (_context.Department == null) ? new List<Department>() : _context.Department.ToList(),
+
                 IdentityUserAndRoleList = model.IdentityUserAndRoleList
                                                          .Where(u => u.Id == id)
                                                          .ToList(),
             };
 
-
-            //ShareDataModel model = null;
-            //model.IdentityUserAndRoleList = sharedData.IdentityUserAndRoleList
-            //                                     .Where(u => u.Id == id)
-            //                                     .ToList();
-            //            ShareDataModel shareDataModel = 
-            //            var administrationModel = await _context.AdministrationModel.FindAsync(id);
-
-            //if (administrationModel == null)
-            //         {
-            //             return NotFound();
-            //         }
             return View(ChoosedUser);
-//            return View(administrationModel);
         }
 
         // POST: AdministrationModels/Edit/5
@@ -224,9 +227,14 @@ namespace FireCodingDesign.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,UserName,FirstName,LastName,Mobile,Email,Department,Role")] AdministrationModel administrationModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,UserName,FirstName,LastName,Mobile,Email,Departments,DepartmentId,DepartmentName,Role")] AdministrationModel administrationModel)
         {
             ShareDataModel? adminuser = null;
+            ShareDataModel departmentList = new ShareDataModel
+            {
+                DepartmentsList = (_context.Department == null) ? new List<Department>() : _context.Department.ToList(),
+            };
+            
             if (id != administrationModel.Id)
             {
                 return NotFound();
@@ -241,7 +249,6 @@ namespace FireCodingDesign.Controllers
 
                     if (existingUser != null)
                     {
-                        //ApplicationUser user = await _userManager.FindByNameAsync(existingUser.UserName) as ApplicationUser;
                         ApplicationUser? user = await _userManager.FindByIdAsync(existingUser.UserId) as ApplicationUser; // Fel
 
                         if (user != null)
@@ -256,10 +263,10 @@ namespace FireCodingDesign.Controllers
                             await _userManager.AddToRoleAsync(user, administrationModel.Role);
 
                             // Update user properties
-//                            ApplicationUser appUser = await _userManager.FindByNameAsync(existingUser.UserName);
                             user.FirstName = administrationModel.FirstName;
                             user.LastName = administrationModel.LastName;
                             user.Email = administrationModel.Email;
+                            user.Mobile = administrationModel.Mobile;
 
                             // Use _userManager.UpdateAsync to update the user in Identity system
                             var result = await _userManager.UpdateAsync(user);
@@ -267,17 +274,29 @@ namespace FireCodingDesign.Controllers
                             {
                                 // Handle the errors
                             }
+// Kolla om dessa behövs
+                            administrationModel.DepartmentId = departmentList.DepartmentsList.Find(d => d.Id == administrationModel.DepartmentId).Id;
+                            administrationModel.DepartmentName = departmentList.DepartmentsList.Find(d => d.Id == administrationModel.DepartmentId).DepartmentName;
+
+                            _context.Entry(existingUser).Reload();
 
                             // Update other properties in your AdministrationModel
+                            existingUser.Email = administrationModel.Email;
                             existingUser.Roles = administrationModel.Roles;
                             existingUser.Role = administrationModel.Role;
                             existingUser.RoleId = administrationModel.RoleId;
                             existingUser.Mobile = administrationModel.Mobile;
-                            existingUser.Departments = administrationModel.Departments;
+                            existingUser.DepartmentName = administrationModel.DepartmentName;
                             existingUser.DepartmentId = administrationModel.DepartmentId;
 
+                            if (!ModelState.IsValid)
+                            {
+                                // Handle validation errors
+                                return View(administrationModel);
+                            }
                             _context.Attach(existingUser); // Attach the existingUser to the context
-                            await _context.SaveChangesAsync();
+                            var result2 = await _context.SaveChangesAsync();
+                            
                         }
                         else
                         {
@@ -288,42 +307,6 @@ namespace FireCodingDesign.Controllers
                     {
                         return NotFound();
                     }
-
-                        //					_context.Update(administrationModel);
-
-
-                        //                    var existingUser = await _userManager.FindByIdAsync(administrationModel.UserId);
-                        //               var existingUser = await _context.AdministrationModel
-                        //                                                       .FirstOrDefaultAsync(u => u.UserId == administrationModel.UserId);
-                        //               if (existingUser != null)
-                        //{
-                        //                   IdentityUser? user = await _userManager.FindByNameAsync(existingUser.UserName);
-                        //                   // Get current roles of the user
-                        //                   var currentRoles = await _userManager.GetRolesAsync(user);
-                        //                   // Remove existing roles
-                        //                   await _userManager.RemoveFromRolesAsync(user, currentRoles);
-                        //                   // Add the new role
-                        //                   await _userManager.AddToRoleAsync(user, administrationModel.Role);
-                        //                   existingUser.FirstName = administrationModel.FirstName;
-                        //                   existingUser.LastName = administrationModel.LastName;
-                        //                   existingUser.Email = administrationModel.Email;
-                        //                   existingUser.Roles = administrationModel.Roles;
-                        //                   existingUser.Role = administrationModel.Role;
-                        //                   existingUser.RoleId = administrationModel.RoleId;
-                        //                   existingUser.Mobile = administrationModel.Mobile;
-                        //                   existingUser.Departments = administrationModel.Departments;
-                        //                   existingUser.DepartmentId = administrationModel.DepartmentId;
-                        //               }
-                        //               else
-                        //{
-                        //                   return NotFound();
-                        //               }
-
-                        //               //					_context.Update(administrationModel);
-                    //    _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.AdministrationModel ON;");
-                    //await _context.SaveChangesAsync();
-                    //_context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.AdministrationModel OFF;");
-                    //transaction.Commit();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -367,12 +350,37 @@ namespace FireCodingDesign.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var administrationModel = await _context.AdministrationModel.FindAsync(id);
-            if (administrationModel != null)
+            var existingUser = await _context.AdministrationModel.FirstOrDefaultAsync(u => u.Id == id);
+
+            if(existingUser == null)
             {
-                _context.AdministrationModel.Remove(administrationModel);
+                return NotFound();
+            }
+
+            var user = await _userManager.FindByIdAsync(existingUser.UserId);
+
+            if (user != null) 
+            {
+                // Delete user in AspNetUsers
+                await _userManager.DeleteAsync(user);
+
+                // Delete That users Roles
+                var roles = await _userManager.GetRolesAsync(user);
+  
+                //foreach (var role in roles)
+                //{
+                //    await _userManager.RemoveFromRoleAsync(user, role);
+                //}
+                await _userManager.RemoveFromRolesAsync(user, roles);
+
+                if (administrationModel != null)
+                {
+                    _context.AdministrationModel.Remove(administrationModel);
+                }
             }
 
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 

@@ -125,27 +125,41 @@ namespace FireCodingDesign.Data
             builder.Entity<Department>().HasData(new Department
             {
                 Id = 1,
-                DepartmentName = "Firecoding Frontend",
-                DepartmentDescription = "Frontend coding"
+                DepartmentName = "Firecoding Planing",
+                DepartmentDescription = "Application testing"
             });
 
             builder.Entity<Department>().HasData(new Department
             {
                 Id = 2,
+                DepartmentName = "Firecoding BackEnd",
+                DepartmentDescription = "Backend coding"
+            });
+
+            builder.Entity<Department>().HasData(new Department
+            {
+                Id = 3,
                 DepartmentName = "Firecoding SQL Design",
                 DepartmentDescription = "SQL design"
             });
 
             builder.Entity<Department>().HasData(new Department
             {
-                Id = 3,
-                DepartmentName = "Firecoding BackEnd",
-                DepartmentDescription = "Backend coding"
+                Id = 4,
+                DepartmentName = "Firecoding Identity",
+                DepartmentDescription = "Application testing"
             });
 
             builder.Entity<Department>().HasData(new Department
-            {   
-                Id = 4,
+            {
+                Id = 5,
+                DepartmentName = "Firecoding Frontend",
+                DepartmentDescription = "Frontend coding"
+            });
+
+            builder.Entity<Department>().HasData(new Department
+            {
+                Id = 6,
                 DepartmentName = "Firecoding Testing",
                 DepartmentDescription = "Application testing"
             });

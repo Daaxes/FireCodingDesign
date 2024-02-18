@@ -36,6 +36,9 @@ namespace FireCodingDesign.Migrations
                     b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
+                    b.Property<string>("DepartmentName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
@@ -194,24 +197,36 @@ namespace FireCodingDesign.Migrations
                         new
                         {
                             Id = 1,
-                            DepartmentDescription = "Frontend coding",
-                            DepartmentName = "Firecoding Frontend"
+                            DepartmentDescription = "Application testing",
+                            DepartmentName = "Firecoding Planing"
                         },
                         new
                         {
                             Id = 2,
-                            DepartmentDescription = "SQL design",
-                            DepartmentName = "Firecoding SQL Design"
-                        },
-                        new
-                        {
-                            Id = 3,
                             DepartmentDescription = "Backend coding",
                             DepartmentName = "Firecoding BackEnd"
                         },
                         new
                         {
+                            Id = 3,
+                            DepartmentDescription = "SQL design",
+                            DepartmentName = "Firecoding SQL Design"
+                        },
+                        new
+                        {
                             Id = 4,
+                            DepartmentDescription = "Application testing",
+                            DepartmentName = "Firecoding Identity"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            DepartmentDescription = "Frontend coding",
+                            DepartmentName = "Firecoding Frontend"
+                        },
+                        new
+                        {
+                            Id = 6,
                             DepartmentDescription = "Application testing",
                             DepartmentName = "Firecoding Testing"
                         });
@@ -308,43 +323,43 @@ namespace FireCodingDesign.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c38b0734-c03b-45ea-be73-5b0009a9629c",
+                            Id = "39184e56-1ea1-4ce3-a623-db091a6f60cd",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
-                            Id = "03dbc52a-1f37-4e2c-8d5d-2a091e80c9cb",
+                            Id = "45f1038c-a69a-4750-a9cc-25495c03c8a7",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "fb7cd699-36b9-4b6c-8aa2-ff8e0ba15cb7",
+                            Id = "4f2f17eb-1ee6-4a01-9a33-04714e9e380f",
                             Name = "PowerUser",
                             NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "058b724b-8a15-4e82-bc3c-75454526dba6",
+                            Id = "36b316b7-6aa8-4412-b1f4-9fce079c7033",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "3d425c6f-c556-4a2a-8a2b-ee66fded978a",
+                            Id = "d5e7bd97-c968-4840-bfe9-2cdc1d7bc3a7",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "09385273-d956-4c6f-8507-fb40cae0c938",
+                            Id = "9a28ed24-d3f5-4e3c-a203-d087124edce9",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "c8391fdf-353f-46b0-9493-78373991e769",
+                            Id = "c951068f-4641-42ab-ab0a-8439c4f10031",
                             Name = "None",
                             NormalizedName = "NONE"
                         });

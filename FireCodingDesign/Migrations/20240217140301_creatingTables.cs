@@ -27,6 +27,7 @@ namespace FireCodingDesign.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Mobile = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DepartmentId = table.Column<int>(type: "int", nullable: true),
+                    DepartmentName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RoleId = table.Column<int>(type: "int", nullable: true),
                     Role = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -299,13 +300,13 @@ namespace FireCodingDesign.Migrations
                 columns: new[] { "Id", "AdministrationModelId", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "03dbc52a-1f37-4e2c-8d5d-2a091e80c9cb", null, null, "Admin", "ADMIN" },
-                    { "058b724b-8a15-4e82-bc3c-75454526dba6", null, null, "Owner", "OWNER" },
-                    { "09385273-d956-4c6f-8507-fb40cae0c938", null, null, "Customer", "CUSTOMER" },
-                    { "3d425c6f-c556-4a2a-8a2b-ee66fded978a", null, null, "User", "USER" },
-                    { "c38b0734-c03b-45ea-be73-5b0009a9629c", null, null, "SuperAdmin", "SUPERADMIN" },
-                    { "c8391fdf-353f-46b0-9493-78373991e769", null, null, "None", "NONE" },
-                    { "fb7cd699-36b9-4b6c-8aa2-ff8e0ba15cb7", null, null, "PowerUser", "POWERUSER" }
+                    { "36b316b7-6aa8-4412-b1f4-9fce079c7033", null, null, "Owner", "OWNER" },
+                    { "39184e56-1ea1-4ce3-a623-db091a6f60cd", null, null, "SuperAdmin", "SUPERADMIN" },
+                    { "45f1038c-a69a-4750-a9cc-25495c03c8a7", null, null, "Admin", "ADMIN" },
+                    { "4f2f17eb-1ee6-4a01-9a33-04714e9e380f", null, null, "PowerUser", "POWERUSER" },
+                    { "9a28ed24-d3f5-4e3c-a203-d087124edce9", null, null, "Customer", "CUSTOMER" },
+                    { "c951068f-4641-42ab-ab0a-8439c4f10031", null, null, "None", "NONE" },
+                    { "d5e7bd97-c968-4840-bfe9-2cdc1d7bc3a7", null, null, "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
@@ -323,10 +324,12 @@ namespace FireCodingDesign.Migrations
                 columns: new[] { "Id", "AdministrationId", "AdministrationModelId", "DepartmentDescription", "DepartmentName" },
                 values: new object[,]
                 {
-                    { 1, null, null, "Frontend coding", "Firecoding Frontend" },
-                    { 2, null, null, "SQL design", "Firecoding SQL Design" },
-                    { 3, null, null, "Backend coding", "Firecoding BackEnd" },
-                    { 4, null, null, "Application testing", "Firecoding Testing" }
+                    { 1, null, null, "Application testing", "Firecoding Planing" },
+                    { 2, null, null, "Backend coding", "Firecoding BackEnd" },
+                    { 3, null, null, "SQL design", "Firecoding SQL Design" },
+                    { 4, null, null, "Application testing", "Firecoding Identity" },
+                    { 5, null, null, "Frontend coding", "Firecoding Frontend" },
+                    { 6, null, null, "Application testing", "Firecoding Testing" }
                 });
 
             migrationBuilder.CreateIndex(
