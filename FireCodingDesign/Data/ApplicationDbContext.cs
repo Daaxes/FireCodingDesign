@@ -126,44 +126,59 @@ namespace FireCodingDesign.Data
             {
                 Id = 1,
                 DepartmentName = "Firecoding Planing",
-                DepartmentDescription = "Application testing"
+                DepartmentDescription = "Planning phase"
             });
 
             builder.Entity<Department>().HasData(new Department
             {
                 Id = 2,
                 DepartmentName = "Firecoding BackEnd",
-                DepartmentDescription = "Backend coding"
+                DepartmentDescription = "Backend coding phase"
             });
 
             builder.Entity<Department>().HasData(new Department
             {
                 Id = 3,
                 DepartmentName = "Firecoding SQL Design",
-                DepartmentDescription = "SQL design"
+                DepartmentDescription = "SQL design phase"
             });
 
             builder.Entity<Department>().HasData(new Department
             {
                 Id = 4,
-                DepartmentName = "Firecoding Identity",
-                DepartmentDescription = "Application testing"
+                DepartmentName = "Firecoding Identity coding",
+                DepartmentDescription = "Identity coding phase"
             });
 
             builder.Entity<Department>().HasData(new Department
             {
                 Id = 5,
                 DepartmentName = "Firecoding Frontend",
-                DepartmentDescription = "Frontend coding"
+                DepartmentDescription = "Frontend coding phase"
             });
 
             builder.Entity<Department>().HasData(new Department
             {
                 Id = 6,
                 DepartmentName = "Firecoding Testing",
-                DepartmentDescription = "Application testing"
+                DepartmentDescription = "Application testing phase"
+            });
+
+            builder.Entity<Department>().HasData(new Department
+            {
+                Id = 7,
+                DepartmentName = "Order sent",
+                DepartmentDescription = "Order sent"
+            });
+
+            builder.Entity<Department>().HasData(new Department
+            {
+                Id = 8,
+                DepartmentName = "order received and approved",
+                DepartmentDescription = "order received and approved"
             });
         }
+
 
         internal Company? FindAsync(int? companyId1, int companyId2)
         {

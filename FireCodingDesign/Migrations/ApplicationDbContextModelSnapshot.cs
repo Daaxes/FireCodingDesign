@@ -187,9 +187,14 @@ namespace FireCodingDesign.Migrations
                     b.Property<string>("DepartmentName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("OrderNumber")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AdministrationModelId");
+
+                    b.HasIndex("OrderNumber");
 
                     b.ToTable("Department");
 
@@ -197,38 +202,50 @@ namespace FireCodingDesign.Migrations
                         new
                         {
                             Id = 1,
-                            DepartmentDescription = "Application testing",
+                            DepartmentDescription = "Planning phase",
                             DepartmentName = "Firecoding Planing"
                         },
                         new
                         {
                             Id = 2,
-                            DepartmentDescription = "Backend coding",
+                            DepartmentDescription = "Backend coding phase",
                             DepartmentName = "Firecoding BackEnd"
                         },
                         new
                         {
                             Id = 3,
-                            DepartmentDescription = "SQL design",
+                            DepartmentDescription = "SQL design phase",
                             DepartmentName = "Firecoding SQL Design"
                         },
                         new
                         {
                             Id = 4,
-                            DepartmentDescription = "Application testing",
-                            DepartmentName = "Firecoding Identity"
+                            DepartmentDescription = "Identity coding phase",
+                            DepartmentName = "Firecoding Identity coding"
                         },
                         new
                         {
                             Id = 5,
-                            DepartmentDescription = "Frontend coding",
+                            DepartmentDescription = "Frontend coding phase",
                             DepartmentName = "Firecoding Frontend"
                         },
                         new
                         {
                             Id = 6,
-                            DepartmentDescription = "Application testing",
+                            DepartmentDescription = "Application testing phase",
                             DepartmentName = "Firecoding Testing"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            DepartmentDescription = "Order sent",
+                            DepartmentName = "Order sent"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            DepartmentDescription = "order received and approved",
+                            DepartmentName = "order received and approved"
                         });
                 });
 
@@ -243,7 +260,22 @@ namespace FireCodingDesign.Migrations
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
+                    b.Property<string>("CustomerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("DepartmentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageContentType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("ImageData")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("ImageDataThumbnail")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("OrderDate")
@@ -258,6 +290,8 @@ namespace FireCodingDesign.Migrations
                     b.HasKey("OrderNumber");
 
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("DepartmentId");
 
                     b.ToTable("Order");
                 });
@@ -323,43 +357,43 @@ namespace FireCodingDesign.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "39184e56-1ea1-4ce3-a623-db091a6f60cd",
+                            Id = "ac11eff5-f532-43e1-9004-1e1eed8ae0d5",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
-                            Id = "45f1038c-a69a-4750-a9cc-25495c03c8a7",
+                            Id = "211bf265-a829-4246-9644-8341ab459b56",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "4f2f17eb-1ee6-4a01-9a33-04714e9e380f",
+                            Id = "2a2d03f6-b4b7-4ce0-9e1e-d73aed3f9679",
                             Name = "PowerUser",
                             NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "36b316b7-6aa8-4412-b1f4-9fce079c7033",
+                            Id = "137e2077-93d2-482d-a40e-6a79fc6ef39f",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "d5e7bd97-c968-4840-bfe9-2cdc1d7bc3a7",
+                            Id = "11fe410a-314b-468c-a898-12fdce0bff8c",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "9a28ed24-d3f5-4e3c-a203-d087124edce9",
+                            Id = "278fa97e-b8fa-4ac5-94e1-48304dec5933",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "c951068f-4641-42ab-ab0a-8439c4f10031",
+                            Id = "8a74c05c-5df4-4d43-a5c2-1dfaa789054a",
                             Name = "None",
                             NormalizedName = "NONE"
                         });
@@ -582,6 +616,10 @@ namespace FireCodingDesign.Migrations
                     b.HasOne("FireCodingDesign.Models.AdministrationModel", null)
                         .WithMany("Departments")
                         .HasForeignKey("AdministrationModelId");
+
+                    b.HasOne("FireCodingDesign.Models.Order", null)
+                        .WithMany("Departments")
+                        .HasForeignKey("OrderNumber");
                 });
 
             modelBuilder.Entity("FireCodingDesign.Models.Order", b =>
@@ -590,7 +628,13 @@ namespace FireCodingDesign.Migrations
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId");
 
+                    b.HasOne("FireCodingDesign.Models.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId");
+
                     b.Navigation("Customer");
+
+                    b.Navigation("Department");
                 });
 
             modelBuilder.Entity("FireCodingDesign.Models.Provider", b =>
@@ -677,6 +721,11 @@ namespace FireCodingDesign.Migrations
             modelBuilder.Entity("FireCodingDesign.Models.Customer", b =>
                 {
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("FireCodingDesign.Models.Order", b =>
+                {
+                    b.Navigation("Departments");
                 });
 #pragma warning restore 612, 618
         }

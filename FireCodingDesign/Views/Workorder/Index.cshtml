@@ -1,22 +1,47 @@
-﻿@model IEnumerable<FireCodingDesign.Models.Order>
+﻿@model IEnumerable<FireCodingDesign.Models.WorkOrder>
 
 @{
     ViewData["Title"] = "Index";
 }
-@* Order Index*@
-<h1>Order Index</h1>
+
+<h1>Index</h1>
+
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+@* <form asp-action="Index" method="get">
+    <div class="form-group">
+        <label asp-for="SelectedDepartmentId" class="control-label"></label>
+        <select asp-for="SelectedDepartmentId" asp-items="new SelectList(Model.Departments, "Id", "DepartmentName")" class="form-control">
+            <option value="">All Departments</option>
+        </select>
+        <input type="submit" value="Filter" class="btn btn-primary" />
+    </div>
+</form>
+ *@
+
+
+<form asp-action="Index" method="get">
+    <div class="form-group">
+        <label asp-for="@Model.FirstOrDefault().Departments" class="control-label"></label>
+        <select asp-for="@Model.FirstOrDefault().DepartmentId" asp-items='new SelectList(Model.FirstOrDefault().Departments, "Id", "DepartmentName")' class="form-control">
+            <option value="@Model.FirstOrDefault().DepartmentName"></option>
+        </select>
+        <span asp-validation-for="@Model.FirstOrDefault().DepartmentName" class="text-danger"></span>
+        <input type="submit" value="Filter" class="btn btn-primary" />
+    </div>
+</form>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ImageDataThumbnail)
+                @Html.DisplayNameFor(model => model.ImageData)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.OrderNumber)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.OrderDate)
@@ -25,10 +50,10 @@
                 @Html.DisplayNameFor(model => model.OrderDoneDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OrderStatus)
+                @Html.DisplayNameFor(model => model.DepartmentName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Customer)
+                @Html.DisplayNameFor(model => model.CustomerName)
             </th>
             <th></th>
         </tr>
@@ -68,3 +93,4 @@
         }
     </tbody>
 </table>
+
