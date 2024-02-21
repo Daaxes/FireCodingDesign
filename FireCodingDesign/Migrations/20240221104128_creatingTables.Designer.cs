@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FireCodingDesign.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240220133048_creatingTables")]
+    [Migration("20240221104128_creatingTables")]
     partial class creatingTables
     {
         /// <inheritdoc />
@@ -249,6 +249,12 @@ namespace FireCodingDesign.Migrations
                             Id = 8,
                             DepartmentDescription = "order received and approved",
                             DepartmentName = "order received and approved"
+                        },
+                        new
+                        {
+                            Id = 100,
+                            DepartmentDescription = "None",
+                            DepartmentName = "None"
                         });
                 });
 
@@ -360,43 +366,43 @@ namespace FireCodingDesign.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ac11eff5-f532-43e1-9004-1e1eed8ae0d5",
+                            Id = "cf1e161e-bf33-4459-ac3a-0e3c91cd2fb9",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
-                            Id = "211bf265-a829-4246-9644-8341ab459b56",
+                            Id = "83337ad7-1670-46c1-b851-284ddf6a8f2b",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "2a2d03f6-b4b7-4ce0-9e1e-d73aed3f9679",
+                            Id = "2ba89b50-3830-430b-873f-59d98cf79fd7",
                             Name = "PowerUser",
                             NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "137e2077-93d2-482d-a40e-6a79fc6ef39f",
+                            Id = "77a805a6-c69f-4a9b-8e58-3765dfeb6a0a",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "11fe410a-314b-468c-a898-12fdce0bff8c",
+                            Id = "416a54e1-1fa8-4376-b02b-01d96fcbec8e",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "278fa97e-b8fa-4ac5-94e1-48304dec5933",
+                            Id = "fda7b491-951e-4d40-90fa-a6d41e2ac41a",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "8a74c05c-5df4-4d43-a5c2-1dfaa789054a",
+                            Id = "464d9d45-b76e-4230-aa8f-23c6c28867e5",
                             Name = "None",
                             NormalizedName = "NONE"
                         });

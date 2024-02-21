@@ -1,11 +1,16 @@
 ﻿using FireCodingDesign.Data;
 using FireCodingDesign.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace FireCodingDesign.Controllers
 {
+    [Authorize(Roles = "SuperAdmin, Admin, PowerUser, Owner, User")]
+
     public class WorkOrderController(ApplicationDbContext context) : Controller
     {
         private readonly ApplicationDbContext _context = context;
@@ -13,24 +18,44 @@ namespace FireCodingDesign.Controllers
         // GET: WorkordersController1
         public ActionResult Index()
         {
-            var workorders = _context.Order.ToList();
+            var ordersWithDepartmentInfo = _context.Order.Include(o => o.Department).ToList();
+            var workOrders = new List<WorkOrder>();
 
-            var workorderView = workorders.Select(order => new WorkOrder
+            // Skapa arbetsordrar och inkludera avdelnings- och orderinformation
+            foreach (var order in ordersWithDepartmentInfo)
             {
-                CustomerName = order.CustomerName,
-                Description = order.Description,
-                ImageContentType = order.ImageContentType,
-                ImageData = order.ImageData,
-                OrderDate = order.OrderDate,
-                OrderDoneDate = order.OrderDoneDate,
-                OrderNumber = order.OrderNumber,
-                ImageDataThumbnail = ConvertImageToBase64(order.ImageData),
-                DepartmentId = order.DepartmentId,
-                Departments = _context.Department.ToList()
-            }).ToList();
+                var workOrder = new WorkOrder
+                {
+                    WorkOrderId = order.OrderNumber,
+                    WorkOrders = new List<Order> { order },
+                    CustomerName = order.CustomerName,
+                    Description = order.Description,
+                    OrderDate = order.OrderDate,
+                    OrderDoneDate = order.OrderDoneDate,
+                    OrderNumber = order.OrderNumber,
+                    ImageFile = order.ImageFile,
+                    ImageData = order.ImageData,
+                    ImageContentType = order.ImageContentType,
+                    ImageDataThumbnail = ConvertImageToBase64(order.ImageData),
+                    DepartmentId = order.DepartmentId,
+                    Departments = _context.Department.ToList()
+//                                        WorkOrderName = order.OrderName,
+                };
 
-            return View(workorderView);
-//            return View();
+                workOrders.Add(workOrder);
+            }
+
+            //            var workorders = _context.Order.ToList();
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            //            var userDepartment = _context.AdministrationModel.FirstOrDefault().DepartmentName;
+            var userDepartment = _context.AdministrationModel.FirstOrDefault(u => u.UserId == userId);
+                //.Where(u => u.UserId == userId)
+                //.Select(u => u.DepartmentName)
+                //.FirstOrDefault();
+
+            return View(workOrders);
+//            return View(workorderView);
+            //            return View();
         }
 
         // GET: WorkordersController1/Details/5

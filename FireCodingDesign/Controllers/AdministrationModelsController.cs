@@ -63,7 +63,7 @@ namespace FireCodingDesign.Controllers
                 if (userDetails != null)
                 {
                     user.DepartmentId = userDetails.DepartmentId;
-                    user.DepartmentName = userDetails.DepartmentName;
+//                    user.DepartmentName = userDetails.DepartmentName;
                 }
             }            //DepartmentId = (u is AdministrationModel)?.DepartmentId,
                          //DepartmentName = (u is AdministrationModel)?.DepartmentName,
@@ -129,7 +129,7 @@ namespace FireCodingDesign.Controllers
                         Email = u.Email,
                         Mobile = u.Mobile,
                         DepartmentId = u.DepartmentId,
-                        DepartmentName = u.DepartmentName,
+//                      DepartmentName = u.DepartmentName,
                         Departments = _context.Department.ToList(),
                         RoleId = u.RoleId,
                         Role = u.Role,
@@ -153,6 +153,7 @@ namespace FireCodingDesign.Controllers
                 IdentityUserAndRoleList = (_context.AdministrationModel == null) ? new List<AdministrationModel>() : _context.AdministrationModel.ToList(),
                 DepartmentsList = (_context.Department == null) ? new List<Department>() : _context.Department.ToList(),
             };
+
 
             return View(sharedData);
         }
@@ -207,6 +208,7 @@ namespace FireCodingDesign.Controllers
                 return NotFound();
             }
 
+ 
             ShareDataModel sharedData = await SyncSharedDataIdentityAsync();
             var model = GetSharedDataIdentity();
 
@@ -276,7 +278,7 @@ namespace FireCodingDesign.Controllers
                             }
 // Kolla om dessa behövs
                             administrationModel.DepartmentId = departmentList.DepartmentsList.Find(d => d.Id == administrationModel.DepartmentId).Id;
-                            administrationModel.DepartmentName = departmentList.DepartmentsList.Find(d => d.Id == administrationModel.DepartmentId).DepartmentName;
+//                            administrationModel.DepartmentName = departmentList.DepartmentsList.Find(d => d.Id == administrationModel.DepartmentId).DepartmentName;
 
                             _context.Entry(existingUser).Reload();
 
@@ -286,7 +288,7 @@ namespace FireCodingDesign.Controllers
                             existingUser.Role = administrationModel.Role;
                             existingUser.RoleId = administrationModel.RoleId;
                             existingUser.Mobile = administrationModel.Mobile;
-                            existingUser.DepartmentName = administrationModel.DepartmentName;
+//                            existingUser.DepartmentName = administrationModel.DepartmentName;
                             existingUser.DepartmentId = administrationModel.DepartmentId;
 
                             if (!ModelState.IsValid)

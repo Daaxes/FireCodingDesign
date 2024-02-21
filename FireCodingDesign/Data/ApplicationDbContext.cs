@@ -177,6 +177,13 @@ namespace FireCodingDesign.Data
                 DepartmentName = "order received and approved",
                 DepartmentDescription = "order received and approved"
             });
+
+            builder.Entity<Department>().HasData(new Department
+            {
+                Id = 100,
+                DepartmentName = "None",
+                DepartmentDescription = "None"
+            });
         }
 
 

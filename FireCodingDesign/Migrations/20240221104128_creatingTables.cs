@@ -311,13 +311,13 @@ namespace FireCodingDesign.Migrations
                 columns: new[] { "Id", "AdministrationModelId", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "11fe410a-314b-468c-a898-12fdce0bff8c", null, null, "User", "USER" },
-                    { "137e2077-93d2-482d-a40e-6a79fc6ef39f", null, null, "Owner", "OWNER" },
-                    { "211bf265-a829-4246-9644-8341ab459b56", null, null, "Admin", "ADMIN" },
-                    { "278fa97e-b8fa-4ac5-94e1-48304dec5933", null, null, "Customer", "CUSTOMER" },
-                    { "2a2d03f6-b4b7-4ce0-9e1e-d73aed3f9679", null, null, "PowerUser", "POWERUSER" },
-                    { "8a74c05c-5df4-4d43-a5c2-1dfaa789054a", null, null, "None", "NONE" },
-                    { "ac11eff5-f532-43e1-9004-1e1eed8ae0d5", null, null, "SuperAdmin", "SUPERADMIN" }
+                    { "2ba89b50-3830-430b-873f-59d98cf79fd7", null, null, "PowerUser", "POWERUSER" },
+                    { "416a54e1-1fa8-4376-b02b-01d96fcbec8e", null, null, "User", "USER" },
+                    { "464d9d45-b76e-4230-aa8f-23c6c28867e5", null, null, "None", "NONE" },
+                    { "77a805a6-c69f-4a9b-8e58-3765dfeb6a0a", null, null, "Owner", "OWNER" },
+                    { "83337ad7-1670-46c1-b851-284ddf6a8f2b", null, null, "Admin", "ADMIN" },
+                    { "cf1e161e-bf33-4459-ac3a-0e3c91cd2fb9", null, null, "SuperAdmin", "SUPERADMIN" },
+                    { "fda7b491-951e-4d40-90fa-a6d41e2ac41a", null, null, "Customer", "CUSTOMER" }
                 });
 
             migrationBuilder.InsertData(
@@ -342,7 +342,8 @@ namespace FireCodingDesign.Migrations
                     { 5, null, null, "Frontend coding phase", "Firecoding Frontend", null },
                     { 6, null, null, "Application testing phase", "Firecoding Testing", null },
                     { 7, null, null, "Order sent", "Order sent", null },
-                    { 8, null, null, "order received and approved", "order received and approved", null }
+                    { 8, null, null, "order received and approved", "order received and approved", null },
+                    { 100, null, null, "None", "None", null }
                 });
 
             migrationBuilder.CreateIndex(

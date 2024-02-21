@@ -20,8 +20,9 @@ namespace FireCodingDesign.Models
         public string? LastName { get; set; }
         public string? Email { get; set; }
         public string? Mobile { get; set; }
-        public int? DepartmentId { get; set; }
-        public string? DepartmentName { get; set; }
+        public int? DepartmentId { get; set; } = 100;
+        public string? DepartmentName => Departments?.FirstOrDefault(d => d.Id == DepartmentId)?.DepartmentName; // ändrat
+//        public string? DepartmentName { get; set; }
         public List<Department>? Departments { get; set; }
         public int? RoleId { get; set; }
         public string? Role { get; set; }

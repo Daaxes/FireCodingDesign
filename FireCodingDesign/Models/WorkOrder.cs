@@ -7,6 +7,7 @@ namespace FireCodingDesign.Models
     public class WorkOrder
     {
         public int WorkOrderId { get; set; }
+        public string WorkOrderName { get; set; }
         public int OrderNumber { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -26,6 +27,6 @@ namespace FireCodingDesign.Models
         public List<Department>? Departments { get; set; }
         public string? DepartmentName => Departments?.FirstOrDefault(d => d.Id == DepartmentId)?.DepartmentDescription; // ändrat
         public string? CustomerName { get; set; }
-
+        public List<Order>? WorkOrders { get; set; }
     }
 }
