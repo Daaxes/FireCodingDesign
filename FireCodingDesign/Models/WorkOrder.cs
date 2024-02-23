@@ -6,8 +6,9 @@ namespace FireCodingDesign.Models
 {
     public class WorkOrder
     {
+        [Key]
         public int WorkOrderId { get; set; }
-        public string WorkOrderName { get; set; }
+        public string? WorkOrderName { get; set; }
         public int OrderNumber { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -16,6 +17,7 @@ namespace FireCodingDesign.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? OrderDoneDate { get; set; }
         public string? Description { get; set; }
+        [NotMapped]
         public IFormFile? ImageFile { get; set; }
         public byte[]? ImageData { get; set; }
         public string? ImageContentType { get; set; }

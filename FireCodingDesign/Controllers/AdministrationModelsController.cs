@@ -46,7 +46,7 @@ namespace FireCodingDesign.Controllers
                         FirstName = (u as ApplicationUser).FirstName,
                         LastName = (u as ApplicationUser).LastName,
                         Mobile = (u as ApplicationUser).Mobile,
-                         Roles = _roleManager.Roles.ToList(),
+                        Roles = _roleManager.Roles.ToList(),
 						Role = _context.UserRoles
 							.Where(ur => ur.UserId == u.Id)
 							.Join(_roleManager.Roles, rm => rm.RoleId, ur => ur.Id, (ur, r) => r.Name)
@@ -64,6 +64,7 @@ namespace FireCodingDesign.Controllers
                 {
                     user.DepartmentId = userDetails.DepartmentId;
 //                    user.DepartmentName = userDetails.DepartmentName;
+                    user.DepartmentName = _context.Department.Find(user.DepartmentId).DepartmentName;
                 }
             }            //DepartmentId = (u is AdministrationModel)?.DepartmentId,
                          //DepartmentName = (u is AdministrationModel)?.DepartmentName,
@@ -98,6 +99,7 @@ namespace FireCodingDesign.Controllers
                         existingUser.Mobile = userWithRoles.Mobile;
                         existingUser.Departments = userWithRoles.Departments;
                         existingUser.DepartmentId = userWithRoles.DepartmentId;
+                        existingUser.DepartmentName = userWithRoles.DepartmentName;
                     }
                     else
                     {
@@ -105,11 +107,12 @@ namespace FireCodingDesign.Controllers
                     }
 
                 }
-            	await context.SaveChangesAsync();
+                //                await context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
-				//         _context.Add(administrationModel.FirstOrDefault());
-				//await _context.SaveChangesAsync();
-	 	return RedirectToAction(nameof(Index));
+            //         _context.Add(administrationModel.FirstOrDefault());
+            //await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
 		}
         //  	return View(administrationModel);
 
@@ -146,7 +149,7 @@ namespace FireCodingDesign.Controllers
         //}
         public async Task<IActionResult> Index()
         {
-			ShareDataModel model = await SyncSharedDataIdentityAsync();
+            ShareDataModel model = await SyncSharedDataIdentityAsync();
 
             var sharedData = new ShareDataModel
             {
@@ -278,7 +281,8 @@ namespace FireCodingDesign.Controllers
                             }
 // Kolla om dessa behövs
                             administrationModel.DepartmentId = departmentList.DepartmentsList.Find(d => d.Id == administrationModel.DepartmentId).Id;
-//                            administrationModel.DepartmentName = departmentList.DepartmentsList.Find(d => d.Id == administrationModel.DepartmentId).DepartmentName;
+//                            var departmentName = _context.Department.Find(administrationModel.DepartmentId);
+//                          administrationModel.DepartmentName = departmentList.DepartmentsList.Find(d => d.Id == administrationModel.DepartmentId).DepartmentName;
 
                             _context.Entry(existingUser).Reload();
 
@@ -288,8 +292,8 @@ namespace FireCodingDesign.Controllers
                             existingUser.Role = administrationModel.Role;
                             existingUser.RoleId = administrationModel.RoleId;
                             existingUser.Mobile = administrationModel.Mobile;
-//                            existingUser.DepartmentName = administrationModel.DepartmentName;
                             existingUser.DepartmentId = administrationModel.DepartmentId;
+                            existingUser.DepartmentName = _context.Department.Find(administrationModel.DepartmentId).DepartmentName;
 
                             if (!ModelState.IsValid)
                             {

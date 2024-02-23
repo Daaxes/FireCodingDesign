@@ -22,6 +22,7 @@ namespace FireCodingDesign.Data
         public DbSet<FireCodingDesign.Models.Provider> Provider { get; set; } = default!;
         public DbSet<FireCodingDesign.Models.Customer> Customer { get; set; } = default!;
         public DbSet<FireCodingDesign.Models.Order> Order { get; set; } = default!;
+        public DbSet<FireCodingDesign.Models.WorkOrder> WorkOrder { get; set; } = default!;
         public DbSet<FireCodingDesign.Models.Department> Department { get; set; } = default!;
 		public DbSet<FireCodingDesign.Models.AdministrationModel> AdministrationModel { get; set; } = default!;
         public DbSet<IdentityRole> Role { get; set; }

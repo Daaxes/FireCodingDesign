@@ -7,28 +7,16 @@
 <h1>Index</h1>
 
 
-<p>
+@* <p>
     <a asp-action="Create">Create New</a>
 </p>
-
-@* <form asp-action="Index" method="get">
-    <div class="form-group">
-        <label asp-for="SelectedDepartmentId" class="control-label"></label>
-        <select asp-for="SelectedDepartmentId" asp-items="new SelectList(Model.Departments, "Id", "DepartmentName")" class="form-control">
-            <option value="">All Departments</option>
-        </select>
-        <input type="submit" value="Filter" class="btn btn-primary" />
-    </div>
-</form>
- *@
-@if(Model.Count() > 0)
-{
+*@
 
 <form asp-action="Index" method="get">
     <div class="form-group">
         <label asp-for="@Model.FirstOrDefault().Departments" class="control-label"></label>
         <select asp-for="@Model.FirstOrDefault().DepartmentId" asp-items='new SelectList(Model.FirstOrDefault().Departments, "Id", "DepartmentName")' class="form-control">
-            <option value="@Model.FirstOrDefault().DepartmentName"></option>
+            <option value="@Model.FirstOrDefault().DepartmentId"></option>
         </select>
         <span asp-validation-for="@Model.FirstOrDefault().DepartmentName" class="text-danger"></span>
         <input type="submit" value="Filter" class="btn btn-primary" />
@@ -94,8 +82,3 @@
     }
     </tbody>
 </table>
-}
-else
-{
-    <h2> Workorder tom</h2>
-}

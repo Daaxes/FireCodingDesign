@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FireCodingDesign.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240221104128_creatingTables")]
+    [Migration("20240222204411_creatingTables")]
     partial class creatingTables
     {
         /// <inheritdoc />
@@ -193,11 +193,16 @@ namespace FireCodingDesign.Migrations
                     b.Property<int?>("OrderNumber")
                         .HasColumnType("int");
 
+                    b.Property<int?>("WorkOrderId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AdministrationModelId");
 
                     b.HasIndex("OrderNumber");
+
+                    b.HasIndex("WorkOrderId");
 
                     b.ToTable("Department");
 
@@ -296,11 +301,16 @@ namespace FireCodingDesign.Migrations
                     b.Property<string>("OrderStatus")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("WorkOrderId")
+                        .HasColumnType("int");
+
                     b.HasKey("OrderNumber");
 
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("DepartmentId");
+
+                    b.HasIndex("WorkOrderId");
 
                     b.ToTable("Order");
                 });
@@ -330,6 +340,54 @@ namespace FireCodingDesign.Migrations
                     b.HasIndex("CompanyId");
 
                     b.ToTable("Provider");
+                });
+
+            modelBuilder.Entity("FireCodingDesign.Models.WorkOrder", b =>
+                {
+                    b.Property<int>("WorkOrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WorkOrderId"));
+
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CustomerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageContentType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("ImageData")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("ImageDataThumbnail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("OrderDoneDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("OrderNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WorkOrderName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("WorkOrderId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("WorkOrder");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -366,43 +424,43 @@ namespace FireCodingDesign.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "cf1e161e-bf33-4459-ac3a-0e3c91cd2fb9",
+                            Id = "88fc3252-2903-4561-a7b1-5af48ba46020",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
-                            Id = "83337ad7-1670-46c1-b851-284ddf6a8f2b",
+                            Id = "1335fcad-2582-4681-b17c-743e898742c3",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "2ba89b50-3830-430b-873f-59d98cf79fd7",
+                            Id = "b9e251db-d427-4010-897b-e9e6ef214ce7",
                             Name = "PowerUser",
                             NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "77a805a6-c69f-4a9b-8e58-3765dfeb6a0a",
+                            Id = "3a64d7e8-9e23-4614-ac85-edc4ca06694f",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "416a54e1-1fa8-4376-b02b-01d96fcbec8e",
+                            Id = "91244dd8-d681-4eb7-ac88-b7aea5dbbe0b",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "fda7b491-951e-4d40-90fa-a6d41e2ac41a",
+                            Id = "062a61a4-e82f-45b3-98f0-76c99ef96bad",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "464d9d45-b76e-4230-aa8f-23c6c28867e5",
+                            Id = "965e3d5f-5137-42d4-9e86-21f915443998",
                             Name = "None",
                             NormalizedName = "NONE"
                         });
@@ -629,6 +687,10 @@ namespace FireCodingDesign.Migrations
                     b.HasOne("FireCodingDesign.Models.Order", null)
                         .WithMany("Departments")
                         .HasForeignKey("OrderNumber");
+
+                    b.HasOne("FireCodingDesign.Models.WorkOrder", null)
+                        .WithMany("Departments")
+                        .HasForeignKey("WorkOrderId");
                 });
 
             modelBuilder.Entity("FireCodingDesign.Models.Order", b =>
@@ -640,6 +702,10 @@ namespace FireCodingDesign.Migrations
                     b.HasOne("FireCodingDesign.Models.Department", "Department")
                         .WithMany()
                         .HasForeignKey("DepartmentId");
+
+                    b.HasOne("FireCodingDesign.Models.WorkOrder", null)
+                        .WithMany("WorkOrders")
+                        .HasForeignKey("WorkOrderId");
 
                     b.Navigation("Customer");
 
@@ -653,6 +719,15 @@ namespace FireCodingDesign.Migrations
                         .HasForeignKey("CompanyId");
 
                     b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("FireCodingDesign.Models.WorkOrder", b =>
+                {
+                    b.HasOne("FireCodingDesign.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -735,6 +810,13 @@ namespace FireCodingDesign.Migrations
             modelBuilder.Entity("FireCodingDesign.Models.Order", b =>
                 {
                     b.Navigation("Departments");
+                });
+
+            modelBuilder.Entity("FireCodingDesign.Models.WorkOrder", b =>
+                {
+                    b.Navigation("Departments");
+
+                    b.Navigation("WorkOrders");
                 });
 #pragma warning restore 612, 618
         }

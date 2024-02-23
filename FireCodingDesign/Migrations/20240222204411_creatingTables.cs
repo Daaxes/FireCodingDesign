@@ -253,6 +253,34 @@ namespace FireCodingDesign.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "WorkOrder",
+                columns: table => new
+                {
+                    WorkOrderId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WorkOrderName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OrderNumber = table.Column<int>(type: "int", nullable: false),
+                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    OrderDoneDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageData = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    ImageContentType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageDataThumbnail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CustomerId = table.Column<int>(type: "int", nullable: true),
+                    DepartmentId = table.Column<int>(type: "int", nullable: true),
+                    CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorkOrder", x => x.WorkOrderId);
+                    table.ForeignKey(
+                        name: "FK_WorkOrder_Customer_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customer",
+                        principalColumn: "CustomerId");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Department",
                 columns: table => new
                 {
@@ -262,7 +290,8 @@ namespace FireCodingDesign.Migrations
                     DepartmentDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AdministrationId = table.Column<int>(type: "int", nullable: true),
                     AdministrationModelId = table.Column<int>(type: "int", nullable: true),
-                    OrderNumber = table.Column<int>(type: "int", nullable: true)
+                    OrderNumber = table.Column<int>(type: "int", nullable: true),
+                    WorkOrderId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -272,6 +301,11 @@ namespace FireCodingDesign.Migrations
                         column: x => x.AdministrationModelId,
                         principalTable: "AdministrationModel",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Department_WorkOrder_WorkOrderId",
+                        column: x => x.WorkOrderId,
+                        principalTable: "WorkOrder",
+                        principalColumn: "WorkOrderId");
                 });
 
             migrationBuilder.CreateTable(
@@ -289,7 +323,8 @@ namespace FireCodingDesign.Migrations
                     ImageData = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     ImageContentType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImageDataThumbnail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DepartmentId = table.Column<int>(type: "int", nullable: true)
+                    DepartmentId = table.Column<int>(type: "int", nullable: true),
+                    WorkOrderId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -304,6 +339,11 @@ namespace FireCodingDesign.Migrations
                         column: x => x.DepartmentId,
                         principalTable: "Department",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Order_WorkOrder_WorkOrderId",
+                        column: x => x.WorkOrderId,
+                        principalTable: "WorkOrder",
+                        principalColumn: "WorkOrderId");
                 });
 
             migrationBuilder.InsertData(
@@ -311,13 +351,13 @@ namespace FireCodingDesign.Migrations
                 columns: new[] { "Id", "AdministrationModelId", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "2ba89b50-3830-430b-873f-59d98cf79fd7", null, null, "PowerUser", "POWERUSER" },
-                    { "416a54e1-1fa8-4376-b02b-01d96fcbec8e", null, null, "User", "USER" },
-                    { "464d9d45-b76e-4230-aa8f-23c6c28867e5", null, null, "None", "NONE" },
-                    { "77a805a6-c69f-4a9b-8e58-3765dfeb6a0a", null, null, "Owner", "OWNER" },
-                    { "83337ad7-1670-46c1-b851-284ddf6a8f2b", null, null, "Admin", "ADMIN" },
-                    { "cf1e161e-bf33-4459-ac3a-0e3c91cd2fb9", null, null, "SuperAdmin", "SUPERADMIN" },
-                    { "fda7b491-951e-4d40-90fa-a6d41e2ac41a", null, null, "Customer", "CUSTOMER" }
+                    { "062a61a4-e82f-45b3-98f0-76c99ef96bad", null, null, "Customer", "CUSTOMER" },
+                    { "1335fcad-2582-4681-b17c-743e898742c3", null, null, "Admin", "ADMIN" },
+                    { "3a64d7e8-9e23-4614-ac85-edc4ca06694f", null, null, "Owner", "OWNER" },
+                    { "88fc3252-2903-4561-a7b1-5af48ba46020", null, null, "SuperAdmin", "SUPERADMIN" },
+                    { "91244dd8-d681-4eb7-ac88-b7aea5dbbe0b", null, null, "User", "USER" },
+                    { "965e3d5f-5137-42d4-9e86-21f915443998", null, null, "None", "NONE" },
+                    { "b9e251db-d427-4010-897b-e9e6ef214ce7", null, null, "PowerUser", "POWERUSER" }
                 });
 
             migrationBuilder.InsertData(
@@ -332,18 +372,18 @@ namespace FireCodingDesign.Migrations
 
             migrationBuilder.InsertData(
                 table: "Department",
-                columns: new[] { "Id", "AdministrationId", "AdministrationModelId", "DepartmentDescription", "DepartmentName", "OrderNumber" },
+                columns: new[] { "Id", "AdministrationId", "AdministrationModelId", "DepartmentDescription", "DepartmentName", "OrderNumber", "WorkOrderId" },
                 values: new object[,]
                 {
-                    { 1, null, null, "Planning phase", "Firecoding Planing", null },
-                    { 2, null, null, "Backend coding phase", "Firecoding BackEnd", null },
-                    { 3, null, null, "SQL design phase", "Firecoding SQL Design", null },
-                    { 4, null, null, "Identity coding phase", "Firecoding Identity coding", null },
-                    { 5, null, null, "Frontend coding phase", "Firecoding Frontend", null },
-                    { 6, null, null, "Application testing phase", "Firecoding Testing", null },
-                    { 7, null, null, "Order sent", "Order sent", null },
-                    { 8, null, null, "order received and approved", "order received and approved", null },
-                    { 100, null, null, "None", "None", null }
+                    { 1, null, null, "Planning phase", "Firecoding Planing", null, null },
+                    { 2, null, null, "Backend coding phase", "Firecoding BackEnd", null, null },
+                    { 3, null, null, "SQL design phase", "Firecoding SQL Design", null, null },
+                    { 4, null, null, "Identity coding phase", "Firecoding Identity coding", null, null },
+                    { 5, null, null, "Frontend coding phase", "Firecoding Frontend", null, null },
+                    { 6, null, null, "Application testing phase", "Firecoding Testing", null, null },
+                    { 7, null, null, "Order sent", "Order sent", null, null },
+                    { 8, null, null, "order received and approved", "order received and approved", null, null },
+                    { 100, null, null, "None", "None", null, null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -406,6 +446,11 @@ namespace FireCodingDesign.Migrations
                 column: "OrderNumber");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Department_WorkOrderId",
+                table: "Department",
+                column: "WorkOrderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Order_CustomerId",
                 table: "Order",
                 column: "CustomerId");
@@ -416,9 +461,19 @@ namespace FireCodingDesign.Migrations
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Order_WorkOrderId",
+                table: "Order",
+                column: "WorkOrderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Provider_CompanyId",
                 table: "Provider",
                 column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkOrder_CustomerId",
+                table: "WorkOrder",
+                column: "CustomerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Department_Order_OrderNumber",
@@ -477,10 +532,13 @@ namespace FireCodingDesign.Migrations
                 name: "Order");
 
             migrationBuilder.DropTable(
-                name: "Customer");
+                name: "Department");
 
             migrationBuilder.DropTable(
-                name: "Department");
+                name: "WorkOrder");
+
+            migrationBuilder.DropTable(
+                name: "Customer");
         }
     }
 }
