@@ -1,5 +1,6 @@
 # Firecoding Design ASP.NET MVC Identity kopplad till MS SQL Server
 
+OBS Master branch är inte den senaste, Master 1 är den senaste
 Beskrivning av mitt slutprojekt webbplatsen Firecoding Design som använder ASP.NET MVC Identity för användarhantering.
 Min hemsida har jag tänk att den skall vara riktad till både till företag och privatsom kan lägga ordrar,
 ladda upp bilder till databasen, skriva beskrivning av hemsidanSätta ett Orderdatum (Automatiskt till dagens datum), Datum för önskad leverans.
