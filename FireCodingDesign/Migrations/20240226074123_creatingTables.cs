@@ -351,13 +351,13 @@ namespace FireCodingDesign.Migrations
                 columns: new[] { "Id", "AdministrationModelId", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "062a61a4-e82f-45b3-98f0-76c99ef96bad", null, null, "Customer", "CUSTOMER" },
-                    { "1335fcad-2582-4681-b17c-743e898742c3", null, null, "Admin", "ADMIN" },
-                    { "3a64d7e8-9e23-4614-ac85-edc4ca06694f", null, null, "Owner", "OWNER" },
-                    { "88fc3252-2903-4561-a7b1-5af48ba46020", null, null, "SuperAdmin", "SUPERADMIN" },
-                    { "91244dd8-d681-4eb7-ac88-b7aea5dbbe0b", null, null, "User", "USER" },
-                    { "965e3d5f-5137-42d4-9e86-21f915443998", null, null, "None", "NONE" },
-                    { "b9e251db-d427-4010-897b-e9e6ef214ce7", null, null, "PowerUser", "POWERUSER" }
+                    { "2ab890ae-0e25-4714-bca6-53dcd2160751", null, null, "Owner", "OWNER" },
+                    { "5bb9e196-28b0-4aff-8f2d-0b235e58ecc8", null, null, "User", "USER" },
+                    { "71c3c483-28a8-417e-92cd-2ac6a83177e5", null, null, "SuperAdmin", "SUPERADMIN" },
+                    { "9ccebdde-4a3e-44b4-86bb-3af6866a9850", null, null, "Customer", "CUSTOMER" },
+                    { "b60f6cf4-07c0-471a-81a8-8daaefd9c87e", null, null, "None", "NONE" },
+                    { "da6f2551-4dae-44bc-973d-92324bd9d4b5", null, null, "PowerUser", "POWERUSER" },
+                    { "f8c904cb-8431-40a8-b60b-8693cd23ba45", null, null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
@@ -365,9 +365,9 @@ namespace FireCodingDesign.Migrations
                 columns: new[] { "CompanyId", "Adress", "CompanyName", "Description", "Email", "OrganizationNumber", "PhoneNumber" },
                 values: new object[,]
                 {
-                    { 1, "Hemma vid rondellen", "Firecoding Design", "Best coding company there are!", "Home@firecoding.se", "000000-0001", "0011-000001" },
-                    { 2, "Hemma vid andra rondellen", "Firecoding Backend", "Best Backend coding company there are!", "backend@firecoding.se", "000000-0002", "0011-000002" },
-                    { 3, "Hemma vid en annan rondell", "Firecoding Frontend", "Best Frontend coding company there are!", "frontend@firecoding.se", "000000-0003", "0011-000003" }
+                    { 1, "Hemma vid rondellen", "Company Design", "Best coding company there are!", "Home@testing.se", "000000-0001", "0011-000001" },
+                    { 2, "Hemma vid andra rondellen", "Company Backend", "Best Backend coding company there are!", "backend@testing.se", "000000-0002", "0011-000002" },
+                    { 3, "Hemma vid en annan rondell", "Company Frontend", "Best Frontend coding company there are!", "frontend@testing.se", "000000-0003", "0011-000003" }
                 });
 
             migrationBuilder.InsertData(
@@ -375,12 +375,12 @@ namespace FireCodingDesign.Migrations
                 columns: new[] { "Id", "AdministrationId", "AdministrationModelId", "DepartmentDescription", "DepartmentName", "OrderNumber", "WorkOrderId" },
                 values: new object[,]
                 {
-                    { 1, null, null, "Planning phase", "Firecoding Planing", null, null },
-                    { 2, null, null, "Backend coding phase", "Firecoding BackEnd", null, null },
-                    { 3, null, null, "SQL design phase", "Firecoding SQL Design", null, null },
-                    { 4, null, null, "Identity coding phase", "Firecoding Identity coding", null, null },
-                    { 5, null, null, "Frontend coding phase", "Firecoding Frontend", null, null },
-                    { 6, null, null, "Application testing phase", "Firecoding Testing", null, null },
+                    { 1, null, null, "Planning phase", "Department Planing", null, null },
+                    { 2, null, null, "Backend coding phase", "Department BackEnd", null, null },
+                    { 3, null, null, "SQL design phase", "Department SQL Design", null, null },
+                    { 4, null, null, "Identity coding phase", "Department Identity coding", null, null },
+                    { 5, null, null, "Frontend coding phase", "Department Frontend", null, null },
+                    { 6, null, null, "Department testing phase", "Department Testing", null, null },
                     { 7, null, null, "Order sent", "Order sent", null, null },
                     { 8, null, null, "order received and approved", "order received and approved", null, null },
                     { 100, null, null, "None", "None", null, null }

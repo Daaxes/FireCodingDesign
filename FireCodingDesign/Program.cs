@@ -52,14 +52,11 @@ app.MapRazorPages();
 // Adding SuperUser member
 using (var scope = app.Services.CreateScope())
 {
-    //var signInManager = scope.ServiceProvider.GetRequiredService<SignInManager<ApplicationUser>>();
-
-    //await signInManager.SignOutAsync();
 
     var userManager =
         scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
-    string email = "superadmin@firecoding.se";
+    string email = "superadmin@testing.se";
     string password = "p@sSw0rd";
 
     var user = new ApplicationUser

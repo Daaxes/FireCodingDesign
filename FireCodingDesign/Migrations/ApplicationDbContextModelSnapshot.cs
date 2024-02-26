@@ -109,9 +109,9 @@ namespace FireCodingDesign.Migrations
                         {
                             CompanyId = 1,
                             Adress = "Hemma vid rondellen",
-                            CompanyName = "Firecoding Design",
+                            CompanyName = "Company Design",
                             Description = "Best coding company there are!",
-                            Email = "Home@firecoding.se",
+                            Email = "Home@testing.se",
                             OrganizationNumber = "000000-0001",
                             PhoneNumber = "0011-000001"
                         },
@@ -119,9 +119,9 @@ namespace FireCodingDesign.Migrations
                         {
                             CompanyId = 2,
                             Adress = "Hemma vid andra rondellen",
-                            CompanyName = "Firecoding Backend",
+                            CompanyName = "Company Backend",
                             Description = "Best Backend coding company there are!",
-                            Email = "backend@firecoding.se",
+                            Email = "backend@testing.se",
                             OrganizationNumber = "000000-0002",
                             PhoneNumber = "0011-000002"
                         },
@@ -129,9 +129,9 @@ namespace FireCodingDesign.Migrations
                         {
                             CompanyId = 3,
                             Adress = "Hemma vid en annan rondell",
-                            CompanyName = "Firecoding Frontend",
+                            CompanyName = "Company Frontend",
                             Description = "Best Frontend coding company there are!",
-                            Email = "frontend@firecoding.se",
+                            Email = "frontend@testing.se",
                             OrganizationNumber = "000000-0003",
                             PhoneNumber = "0011-000003"
                         });
@@ -208,37 +208,37 @@ namespace FireCodingDesign.Migrations
                         {
                             Id = 1,
                             DepartmentDescription = "Planning phase",
-                            DepartmentName = "Firecoding Planing"
+                            DepartmentName = "Department Planing"
                         },
                         new
                         {
                             Id = 2,
                             DepartmentDescription = "Backend coding phase",
-                            DepartmentName = "Firecoding BackEnd"
+                            DepartmentName = "Department BackEnd"
                         },
                         new
                         {
                             Id = 3,
                             DepartmentDescription = "SQL design phase",
-                            DepartmentName = "Firecoding SQL Design"
+                            DepartmentName = "Department SQL Design"
                         },
                         new
                         {
                             Id = 4,
                             DepartmentDescription = "Identity coding phase",
-                            DepartmentName = "Firecoding Identity coding"
+                            DepartmentName = "Department Identity coding"
                         },
                         new
                         {
                             Id = 5,
                             DepartmentDescription = "Frontend coding phase",
-                            DepartmentName = "Firecoding Frontend"
+                            DepartmentName = "Department Frontend"
                         },
                         new
                         {
                             Id = 6,
-                            DepartmentDescription = "Application testing phase",
-                            DepartmentName = "Firecoding Testing"
+                            DepartmentDescription = "Department testing phase",
+                            DepartmentName = "Department Testing"
                         },
                         new
                         {
@@ -421,43 +421,43 @@ namespace FireCodingDesign.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "88fc3252-2903-4561-a7b1-5af48ba46020",
+                            Id = "71c3c483-28a8-417e-92cd-2ac6a83177e5",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
-                            Id = "1335fcad-2582-4681-b17c-743e898742c3",
+                            Id = "f8c904cb-8431-40a8-b60b-8693cd23ba45",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "b9e251db-d427-4010-897b-e9e6ef214ce7",
+                            Id = "da6f2551-4dae-44bc-973d-92324bd9d4b5",
                             Name = "PowerUser",
                             NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "3a64d7e8-9e23-4614-ac85-edc4ca06694f",
+                            Id = "2ab890ae-0e25-4714-bca6-53dcd2160751",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "91244dd8-d681-4eb7-ac88-b7aea5dbbe0b",
+                            Id = "5bb9e196-28b0-4aff-8f2d-0b235e58ecc8",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "062a61a4-e82f-45b3-98f0-76c99ef96bad",
+                            Id = "9ccebdde-4a3e-44b4-86bb-3af6866a9850",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "965e3d5f-5137-42d4-9e86-21f915443998",
+                            Id = "b60f6cf4-07c0-471a-81a8-8daaefd9c87e",
                             Name = "None",
                             NormalizedName = "NONE"
                         });

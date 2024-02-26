@@ -21,16 +21,14 @@ namespace FireCodingDesign
             Console.WriteLine("Startup default constructor called.");
         }
 
-        //        public void Configure(IApplicationBuilder app)
-        public void Configure(IApplicationBuilder app)  // Extra , IWebHostEnvironment env
+        public void Configure(IApplicationBuilder app)  // Extra
         {
             Console.WriteLine("Configure method called.");
-            // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         }
 
         public IConfiguration Configuration { get; }
 
-        public class MyShutdownService : IHostedService  // Extra för logout
+        public class MyShutdownService : IHostedService
         {
             private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -45,7 +43,6 @@ namespace FireCodingDesign
             public async Task StopAsync(CancellationToken cancellationToken)
             {
                 Console.WriteLine("My stopAsync method called.");
-                // Sign out any authenticated users during shutdown
                 var httpContext = _httpContextAccessor.HttpContext;
                 await httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             }
@@ -60,15 +57,13 @@ namespace FireCodingDesign
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
-            //			services.AddIdentity<IdentityUser, IdentityRole>();
-            // extra not working
             services.AddIdentity<ApplicationUser, IdentityRole>()
                     .AddSignInManager<SignInManager<ApplicationUser>>()
                     .AddEntityFrameworkStores<ApplicationDbContext>()
                     .AddDefaultTokenProviders();
 
-            services.AddControllersWithViews(); // Exempel: Lägg till MVC-tjänster
-            services.AddHostedService<MyShutdownService>(); // Extra för logout
+            services.AddControllersWithViews();
+            services.AddHostedService<MyShutdownService>();
 
         }
     }
